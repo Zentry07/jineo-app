@@ -1,0 +1,18 @@
+{
+  "applinks": {
+    "details": [
+      {
+        "appID": "NMND2RQBF3.com.universalai.jineo",
+        "paths": [
+          "/invite/*",
+          "/i/*"
+        ]
+      }
+    ]
+  },
+  "webcredentials": {
+    "apps": [
+      "NMND2RQBF3.com.universalai.jineo"
+    ]
+  }
+}
