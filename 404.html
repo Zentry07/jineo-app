@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>You're invited to Jineo · Korean Skin Scan</title>
+  <meta property="og:title" content="You're invited to Jineo · Korean Skin Scan">
+  <meta property="og:description" content="Open the app to claim your 100 진점 welcome bonus.">
+  <meta property="og:image" content="https://jineo.app/og-invite.png">
+  <link rel="apple-touch-icon" href="https://jineo.app/icon-180.png">
+  <style>
+    :root { color-scheme: light; }
+    body { margin: 0; font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Inter", sans-serif; background: #FAF7F2; color: #1A1715; }
+    .wrap { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 48px 24px; gap: 32px; text-align: center; }
+    .glyph { font-size: 72px; line-height: 1; font-weight: 900; letter-spacing: -3px; color: #B85C7A; }
+    .kicker { font-size: 11px; letter-spacing: 2.2px; text-transform: uppercase; color: #B85C7A; font-weight: 700; }
+    h1 { font-size: 32px; line-height: 1.15; margin: 4px 0 0; font-weight: 800; }
+    p { font-size: 16px; line-height: 1.4; color: rgba(26,23,21,0.7); max-width: 360px; margin: 0; }
+    .code-pill { padding: 12px 20px; border-radius: 999px; background: rgba(201,169,97,0.18); border: 1px solid rgba(201,169,97,0.5); display: inline-flex; gap: 8px; align-items: center; }
+    .code-pill .label { font-size: 10px; letter-spacing: 1.6px; color: #8F7534; font-weight: 800; }
+    .code-pill .code { font-size: 20px; color: #B85C7A; font-weight: 900; letter-spacing: 1.4px; }
+    .cta { padding: 16px 32px; border-radius: 999px; background: linear-gradient(135deg, #B85C7A, #8C3E5C); color: #FFFFFF; text-decoration: none; font-size: 17px; font-weight: 700; letter-spacing: 0.4px; box-shadow: 0 14px 28px rgba(184,92,122,0.42); }
+    .foot { font-size: 12px; color: rgba(26,23,21,0.5); }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="glyph">진</div>
+    <div>
+      <div class="kicker">JINEO · K-BEAUTY AI</div>
+      <h1>Your friend invited you.</h1>
+    </div>
+    <p>You'll land in Jineo with <strong>100 진점</strong> — our in-app currency — already added. Open the app to claim your Korean Skin scan.</p>
+    <div class="code-pill">
+      <span class="label">USE CODE</span>
+      <span class="code" id="code">—</span>
+    </div>
+    <a class="cta" id="cta" href="https://apps.apple.com/app/id6762692530">Open Jineo →</a>
+    <div class="foot">Code stays attached for 7 days · works once per device</div>
+  </div>
+  <script>
+    // Extract code from /invite/CODE path
+    const segments = window.location.pathname.split("/").filter(Boolean);
+    const code = (segments[segments.length - 1] || "").toUpperCase().replace(/[^A-Z0-9]/g, "");
+    if (code && code.length >= 3) {
+      document.getElementById("code").textContent = code;
+      const cta = document.getElementById("cta");
+      // Try app first; fall back to App Store via timeout.
+      cta.addEventListener("click", function(e) {
+        e.preventDefault();
+        window.location.href = "jineo://invite/" + code;
+        setTimeout(function() { window.location.href = "https://apps.apple.com/app/id6762692530"; }, 1200);
+      });
+    }
+  </script>
+</body>
+</html>
