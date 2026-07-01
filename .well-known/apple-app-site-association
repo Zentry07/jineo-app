@@ -2,17 +2,16 @@
   "applinks": {
     "details": [
       {
-        "appID": "NMND2RQBF3.com.universalai.jineo",
-        "paths": [
-          "/invite/*",
-          "/i/*"
+        "appIDs": ["NMND2RQBF3.com.universalai.jineo"],
+        "components": [
+          { "/": "/invite/*", "comment": "Referral invite deep links — routes to in-app /invite/[code]" },
+          { "/": "/share/*", "comment": "Skin-name + Sasang share cards — routes to in-app /share view" },
+          { "/": "/scan/*", "comment": "Reserved for future scan-result deep links" }
         ]
       }
     ]
   },
   "webcredentials": {
-    "apps": [
-      "NMND2RQBF3.com.universalai.jineo"
-    ]
+    "apps": ["NMND2RQBF3.com.universalai.jineo"]
   }
 }
