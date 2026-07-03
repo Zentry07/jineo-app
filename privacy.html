@@ -44,8 +44,8 @@
 <div class="short">
   <strong>The short version</strong>
   <ul>
-    <li>Your selfies for skin analysis are processed <strong>on your device</strong> and <strong>discarded after analysis</strong>. We never upload them unless you explicitly tap "Share".</li>
-    <li>We store a <strong>local-only</strong> history of your skin scores, routines, and diary entries on your device. If you create a Jineo account, we sync a copy to secure cloud storage so you can access it from multiple devices.</li>
+    <li>Your selfie for skin analysis is sent, over an encrypted connection via our secure proxy, to <strong>OpenAI's Vision API</strong> for a single one-time analysis, then <strong>discarded</strong> — it is never stored on our servers and never used to train any model. You give explicit consent before any photo is sent.</li>
+    <li>Your skin scores, scan history, and diary entries stay <strong>on your device</strong>. If you opt in to Glow Circle, only your ritual-completion dates and a pseudonymous handle sync to power buddy streaks.</li>
     <li>We do not sell your personal data. We do not use it to train AI. We do not share it with advertisers.</li>
     <li>Purchase processing happens through Apple. We see whether you're a paying subscriber (via RevenueCat) but we never see your payment method.</li>
   </ul>
@@ -53,26 +53,29 @@
 
 <h2>What we collect</h2>
 
-<h3>On your device (never leaves unless you share)</h3>
+<h3>Stored on your device</h3>
 <ul>
-  <li>Selfies you take for skin analysis (processed → discarded)</li>
   <li>Your onboarding answers (skin goals, season, sensitivity)</li>
   <li>Your scan results (scores only — no image)</li>
   <li>Your diary entries (photos + notes you save yourself)</li>
   <li>Your streak and ritual progress</li>
 </ul>
 
-<h3>Synced to our servers (if you create an account)</h3>
+<h3>Sent to OpenAI for a one-time analysis, then discarded</h3>
 <ul>
-  <li>Your user ID (anonymous UUID we generate)</li>
-  <li>Your scan results (scores only — no image)</li>
-  <li>Your routine selections</li>
-  <li>Your Pro subscription status (via RevenueCat)</li>
+  <li>Your selfie for skin analysis — transmitted over an encrypted connection, via our Supabase edge proxy, to OpenAI's Vision API for a single analysis. It is not stored on our servers, not used to train any model, and not forwarded to anyone after analysis. (OpenAI, acting as our processor, may retain the API request up to 30 days for its own abuse monitoring under its API terms, then deletes it.)</li>
+</ul>
+
+<h3>Kept on our servers (pseudonymous, for abuse-prevention + cost control)</h3>
+<ul>
+  <li>An anonymous user ID (a UUID we generate) and your Pro subscription status (via RevenueCat)</li>
+  <li>A scan-activity record — a device/account identifier, the scan type, and a salted one-way hash of your IP address (never the image, never your skin results) — kept up to 90 days, then auto-deleted</li>
 </ul>
 
 <h3>Not collected</h3>
 <ul>
-  <li>Your selfies (discarded after on-device analysis)</li>
+  <li>Any stored copy of your selfie (it is discarded immediately after the one-time analysis)</li>
+  <li>Any facial-recognition template — we do not identify you from your face</li>
   <li>Your contacts, location, health records, bank details, social accounts</li>
   <li>Advertising identifiers</li>
   <li>Your Apple ID password</li>
@@ -83,7 +86,7 @@
 <ul>
   <li><strong>Provide the service</strong> — your scan scores drive product matches and nightly protocols</li>
   <li><strong>Sync across devices</strong> — if you log in on iPad + iPhone, your data follows you</li>
-  <li><strong>Improve safety</strong> — aggregate, non-identifying rule-fit metrics help us refine deterministic coaching logic</li>
+  <li><strong>AI coaching</strong> — Hana, your in-app coach, is powered by a large language model from OpenAI; your questions and relevant profile context are sent to generate each reply</li>
   <li><strong>Subscription management</strong> — RevenueCat tracks entitlement state so Pro unlocks across devices</li>
   <li><strong>Crash diagnostics</strong> — if we add Sentry (opt-in in Settings), crash logs are collected without personal data</li>
 </ul>
@@ -98,17 +101,21 @@
 <h2>Camera and photos</h2>
 <p>Jineo requests camera access to capture a skin-analysis selfie and to scan product ingredient labels / barcodes. Each selfie is:</p>
 <ol>
-  <li>Captured locally</li>
-  <li>Analyzed on your device</li>
-  <li>Discarded immediately after analysis</li>
+  <li>Captured only after you give explicit consent on our AI-consent screen</li>
+  <li>Sent over an encrypted connection, via our secure Supabase edge proxy, to OpenAI's Vision API for a single one-time analysis</li>
+  <li>Discarded immediately after your score returns — never stored on our servers, never used to train any model</li>
 </ol>
 <p>If you choose "Save to photos" on a result share card, that's the only time a Jineo-generated image reaches your photo library — and you initiate it explicitly.</p>
+
+<h2>Biometric information (Illinois, Texas, Washington)</h2>
+<p>When you scan, Jineo's AI examines the geometry and surface of your face — the position and appearance of features, pores, and marks — to produce your cosmetic skin read. We treat this as biometric information. We do <strong>not</strong> create a facial-recognition template, we do <strong>not</strong> use it to identify you, and we do <strong>not</strong> retain the facial geometry: your image and every coordinate derived from it are sent to the OpenAI Vision API for a single analysis and discarded immediately after your score returns. No readable image data persists on our servers.</p>
+<p>Residents of Illinois, Texas, and Washington: by checking the biometric-consent box on our AI-consent screen and taking a selfie, you give informed, written, opt-in consent to this biometric collection under 740 ILCS 14/15 (BIPA), Texas Bus. &amp; Com. Code §503.001 (CUBI), and RCW 19.375 (Washington). Retention &amp; destruction: the selfie sent for analysis and the facial geometry derived from it are held only transiently — in memory for the one-time analysis — and are destroyed upon return of your score; they are never written to durable storage. You may withdraw consent at any time by deleting your account (Settings → Delete account).</p>
 
 <h2>Subscriptions and payments</h2>
 <p>Jineo offers in-app subscriptions:</p>
 <ul>
-  <li><strong>Weekly</strong>: $7.99 / week</li>
-  <li><strong>Annual</strong>: $59.99 / year (3-day free trial)</li>
+  <li><strong>Weekly</strong>: $9.99 / week (no free trial — billed immediately)</li>
+  <li><strong>Annual</strong>: $79.99 / year (includes a 3-day free trial)</li>
 </ul>
 <p>Payment is processed by <strong>Apple</strong>. Subscriptions auto-renew unless canceled at least 24 hours before the end of the current period. Manage or cancel anytime in Settings → Apple ID → Subscriptions.</p>
 <p>We use <strong>RevenueCat</strong> to verify entitlement state. RevenueCat stores an anonymous identifier and subscription status — never your payment details.</p>
@@ -129,7 +136,8 @@
 
 <h2>Data retention</h2>
 <ul>
-  <li><strong>Selfies</strong>: deleted immediately after on-device analysis (not retained anywhere)</li>
+  <li><strong>Selfies</strong>: discarded immediately after the one-time OpenAI analysis (never written to our durable storage; OpenAI may retain the API request up to 30 days for its own abuse monitoring, then deletes it)</li>
+  <li><strong>Scan-activity record</strong> (device/account id, scan type, salted IP hash — never the image): up to 90 days, then auto-deleted</li>
   <li><strong>Scan scores</strong>: retained for the life of your account; deleted on request</li>
   <li><strong>Diary entries</strong>: retained until you delete them or close your account</li>
   <li><strong>Subscription status</strong>: retained as long as required by tax + accounting law (typically 7 years post-termination)</li>
@@ -142,10 +150,14 @@
 <p>We use a small number of well-known vendors:</p>
 <ul>
   <li><strong>Apple</strong> — app distribution, in-app purchases</li>
-  <li><strong>Supabase (US) Inc.</strong> — account sync database + edge functions</li>
+  <li><strong>Supabase (US) Inc.</strong> — edge-function proxy + account database</li>
+  <li><strong>OpenAI</strong> — AI skin-scan analysis (Vision API) and the Hana coach (language model)</li>
   <li><strong>RevenueCat, Inc.</strong> — subscription entitlement verification</li>
-  <li><strong>Google / Apple</strong> — mobile push notifications (FCM on Android, APNs on iOS)</li>
+  <li><strong>ElevenLabs</strong> — Hana voice text-to-speech (Pro only; text-only payloads, no user identifiers)</li>
+  <li><strong>PostHog</strong> — pseudonymous product analytics; <strong>Sentry</strong> — crash diagnostics (PII scrubbed); <strong>Resend</strong> — transactional email</li>
+  <li><strong>Apple</strong> — push notifications (APNs)</li>
 </ul>
+<p>Each vendor processes data only as our contracted data processor. None of them receives your data to sell or to train their own models on your identity.</p>
 <p>Each vendor processes data only as our contracted data processor. We have data-processing addenda with all of them.</p>
 
 <h2>International transfers</h2>
