@@ -213,6 +213,13 @@
     .device { width: min(100%, 300px); } .metric { grid-template-columns: 120px 1fr 44px; }
     .sticky { display: flex; position: fixed; left: 12px; right: 12px; bottom: 12px; z-index: 30; justify-content: center; }
     .sticky .btn { width: 100%; justify-content: center; }
+    /* Real-screens gallery on phones: one swipeable row of large screens instead of a 2-up grid whose
+       captions wrapped one word per line. Scroll-snap, no scrollbar, edge-to-edge bleed. */
+    .gallery { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; gap: 12px; margin: 0 -24px; padding: 4px 24px 10px;
+      -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+    .gallery::-webkit-scrollbar { display: none; }
+    .shot { flex: 0 0 76%; scroll-snap-align: start; }
+    .shot figcaption { font-size: 14px; } .shot figcaption b { font-size: 15px; }
   }
   @media (prefers-reduced-motion: reduce) {
     .tag, .pip, .scanline { animation: none; } .fill { animation: none; width: var(--w); }
