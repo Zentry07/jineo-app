@@ -35,7 +35,7 @@
 
 <div class="kicker">한 · 뷰티</div>
 <h1>Privacy Policy</h1>
-<p class="date">Last updated: August 4, 2026 · Effective: the date you first open the app</p>
+<p class="date">Last updated: October 9, 2026 · Effective: the date you first open the app</p>
 
 <h2>Who we are</h2>
 <p>Jineo is published and operated by <strong>Universal AI LLC</strong>, a Maryland limited liability company ("we", "us", "Jineo"). The app is distributed on the App Store under the Universal AI LLC organization account.</p>
@@ -46,7 +46,7 @@
   <ul>
     <li>Optional health &amp; wellness inputs — if you turn on cycle-aware skincare, add a pregnancy filter, or list ingredient allergies, those entries (your last-period date / cycle phase, pregnancy status, and allergy list) are included in the relevant AI request via our secure proxy so Hana and your scan results can respect them. They are stored on your device, never stored on our servers, never used for advertising or tracking, and deleted with your data. (OpenAI, acting as our processor, may retain the request up to 30 days for abuse monitoring, then deletes it.) These features are optional — skincare guidance works without them.</li>
   <li>Your selfie for skin analysis is sent, over an encrypted connection via our secure proxy, to <strong>OpenAI's Vision API</strong> for a single one-time analysis, then <strong>discarded</strong> — it is never stored on our servers and never used to train any model. You give explicit consent before any photo is sent.</li>
-    <li>Your skin scores, scan history, and diary entries stay <strong>on your device</strong>. If you opt in to Glow Circle, only your ritual-completion dates and a pseudonymous handle sync to power buddy streaks.</li>
+    <li>Your skin reads, scan history and diary entries stay <strong>on your device</strong>. They do not sync to another device through your account; use a private backup export for local records.</li>
     <li>We do not sell your personal data. We do not use it to train AI. We do not share it with advertisers.</li>
     <li>Purchase processing happens through Apple. We see whether you're a paying subscriber (via RevenueCat) but we never see your payment method.</li>
   </ul>
@@ -58,27 +58,33 @@
 <ul>
   <li>Your onboarding answers (skin goals, season, sensitivity)</li>
   <li>Your scan results (scores, skin type, personal color, concerns and sub-scores), your routines and your scan history — these live on your device and are never persisted to our servers</li>
-  <li>A copy of each scan selfie, saved for your skin timeline — normally a downscaled thumbnail (see "Camera and photos" below)</li>
+  <li>A downscaled scan preview may be saved for your skin timeline (see "Camera and photos" below)</li>
   <li>Your diary entries (photos + notes you save yourself)</li>
   <li>Your streak and ritual progress</li>
 </ul>
 
-<h3>Sent to OpenAI for a one-time analysis, then discarded</h3>
+<h3>Sent to OpenAI for requested analysis or replies</h3>
 <ul>
   <li>Your selfie for skin analysis — transmitted over an encrypted connection, via our Supabase edge proxy, to OpenAI's Vision API for a single analysis. It is not stored on our servers, not used to train any model, and not forwarded to anyone after analysis. (OpenAI, acting as our processor, may retain the API request up to 30 days for its own abuse monitoring under its API terms, then deletes it.)</li>
 </ul>
 
-<h3>Kept on our servers (pseudonymous, for abuse-prevention + cost control)</h3>
+<p>Hana chat messages and relevant profile, skin history, shelf, routine and selected-city weather context are sent through our AI proxy to OpenAI to generate replies. Product and ingredient photos you capture or choose are sent for requested identification or label reads, then discarded from Jineo servers. We access only the chosen photo. Conversation history stays on your device. OpenAI may retain requests for up to 30 days for abuse monitoring.</p>
+
+<h3>Kept on our servers (pseudonymous, for requested features and service operation)</h3>
 <ul>
-  <li>An anonymous user ID (a UUID we generate) and your Pro subscription status (via RevenueCat)</li>
+  <li>A pseudonymous account ID and your Pro subscription status (via RevenueCat). Email is collected when you sign in or opt in to email updates; subscription preferences are stored so we can honor your choice.</li>
   <li>A scan-activity record — a device/account identifier, the scan type, and a salted one-way hash of your IP address (never the image, never your skin results) — kept up to 90 days, then auto-deleted</li>
+  <li>If notifications are allowed, we store your push token and platform linked to your pseudonymous account, and use Expo and Apple push services. The token is removed when notification access is revoked and the app next opens, or when your account is deleted.</li>
+  <li>Product reviews store the text, rating, skin details you attach, use duration and pseudonymous handle. OpenAI moderation checks text before publication; reports and blocks are also stored. These records are deleted with your account.</li>
+  <li>Product requests store the name, any pasted link, photo count and ingredient text read on your device, linked to account/device identifiers; request photos are not stored with the request. A missing-product report emails its brand, name and note to our own inbox through Resend. Stored requests are deleted with your account.</li>
+  <li>Consent receipts record your pseudonymous account, consent choice, policy version and date. Receipts are deleted with your account.</li>
 </ul>
 
 <h3>Not collected</h3>
 <ul>
   <li>Any copy of your selfie on our servers (the image sent for analysis is discarded immediately afterwards; the timeline copy described under "Camera and photos" stays on your device and is never uploaded)</li>
   <li>Any facial-recognition template — we do not identify you from your face</li>
-  <li>Your contacts, location, bank details, social accounts</li>
+  <li>Your contacts, precise GPS location, bank details or social accounts</li>
   <li>Advertising identifiers</li>
   <li>Your Apple ID password</li>
   <li>Your payment details</li>
@@ -90,7 +96,7 @@
   <li><strong>Subscription restore, not data sync</strong> — there is no cloud sync of your skin data. Your scan scores, routines, diary and scan history stay on the device that created them and do not follow you to another iPhone or iPad. Only your Pro entitlement restores across your own devices, through Apple</li>
   <li><strong>AI coaching</strong> — Hana, your in-app coach, is powered by a large language model from OpenAI; your questions and relevant profile context are sent to generate each reply</li>
   <li><strong>Subscription management</strong> — RevenueCat tracks entitlement state so Pro unlocks across devices</li>
-  <li><strong>Crash diagnostics</strong> — Sentry is active in the app today (this policy previously described it as something we might add later). It is consent-gated in Settings, and email, IP and username are scrubbed before send — but your pseudonymous Jineo account id IS attached to each event, so these reports are linked to your anonymous account rather than fully anonymous. Product analytics (PostHog) works the same way</li>
+  <li><strong>Crash diagnostics</strong> — Sentry is active in the app today (this policy previously described it as something we might add later). It is consent-gated in Settings, and email, IP and username are scrubbed before send — but your pseudonymous Jineo account id IS attached to each event, so these reports are linked to your anonymous account rather than fully anonymous. Product analytics (PostHog) works the same way. Delete Account sends a best-effort PostHog deletion event but cannot confirm erasure, and does not erase historical Sentry events. Contact us to request or confirm processor deletion.</li>
 </ul>
 <p>We never:</p>
 <ul>
@@ -107,18 +113,18 @@
   <li>Sent over an encrypted connection, via our secure Supabase edge proxy, to OpenAI's Vision API for a single one-time analysis</li>
   <li>Discarded immediately after your score returns — never stored on our servers, never used to train any model</li>
 </ol>
-<p>One thing that is kept, so you are not surprised by it: after each scan a <strong>copy of your selfie is saved on your device</strong> for your skin timeline, so you can see your progress over time. This is a downscaled thumbnail. (In app versions 1.0.1115 and earlier, if the downscaling step failed the original image was saved instead; from the next release onward nothing is saved at all when downscaling fails, so the copy on your device is always a thumbnail.) Either way it is kept <strong>on your device only</strong> — excluded from iCloud and iTunes backup, never uploaded to our servers, and removed when you delete your data or your account (Settings → Delete account). The copy sent to our AI proxy for analysis is separate and is not kept on our servers.</p>
+<p>After a scan, a downscaled preview may be saved on your device for your skin timeline. Current previews use an evictable cache, so iOS may remove them to free space. If downscaling fails, the current app does not save the original as a fallback. Older previews, previously saved full-size images and other local records may be in backup-eligible storage. Deleting app data removes Jineo's local copies; it cannot remove copies you exported or saved to Photos, or existing device backups. The image sent to our AI proxy is separate and is not kept on Jineo servers.</p>
 <p>If you choose "Save to photos" on a result share card, that's the only time a Jineo-generated image reaches your photo library — and you initiate it explicitly.</p>
 
 <h2>Biometric information (Illinois, Texas, Washington)</h2>
 <p>When you scan, Jineo's AI examines the geometry and surface of your face — the position and appearance of features, pores, and marks — to produce your cosmetic skin read. We treat this as biometric information. We do <strong>not</strong> create a facial-recognition template, we do <strong>not</strong> use it to identify you, and we do <strong>not</strong> retain the facial geometry: your image and every coordinate derived from it are sent to the OpenAI Vision API for a single analysis and discarded immediately after your score returns. No readable image data persists on our servers.</p>
-<p>Residents of Illinois, Texas, and Washington: by checking the biometric-consent box on our AI-consent screen and taking a selfie, you give informed, written, opt-in consent to this biometric collection under 740 ILCS 14/15 (BIPA), Texas Bus. &amp; Com. Code §503.001 (CUBI), and RCW 19.375 (Washington). Retention &amp; destruction: the selfie sent for analysis and the facial geometry derived from it are held only transiently on our servers — in memory for the one-time analysis — and are destroyed upon return of your score; they are never written to durable storage on our servers, and the facial geometry is never written to durable storage anywhere. The on-device timeline copy described under "Camera and photos" stays on your device only and is deleted when you delete your account. You may withdraw consent at any time by deleting your account (Settings → Delete account).</p>
+<p>Residents of Illinois, Texas, and Washington: by checking the biometric-consent box on our AI-consent screen and taking a selfie, you give informed, written, opt-in consent to this biometric collection under 740 ILCS 14/15 (BIPA), Texas Bus. &amp; Com. Code §503.001 (CUBI), and RCW 19.375 (Washington). Retention &amp; destruction: the selfie sent for analysis and the facial geometry derived from it are held only transiently on our servers — in memory for the one-time analysis — and are destroyed upon return of your score; they are never written to durable storage on our servers, and the facial geometry is never written to durable storage anywhere. The on-device timeline copy described under "Camera and photos" stays on your device only and is deleted when you delete your account. You may withdraw AI processing consent in You → Data &amp; privacy → AI processing consent, delete your account, or contact us to request withdrawal. Future AI scans require fresh consent after revocation.</p>
 
 <h2>Subscriptions and payments</h2>
 <p>Jineo offers in-app subscriptions:</p>
 <ul>
-  <li><strong>Weekly</strong>: $5.99 / week (no free trial — billed immediately)</li>
-  <li><strong>Annual</strong>: $59.99 / year (includes a 7-day free trial)</li>
+  <li><strong>Weekly</strong>: the localized weekly price shown in the app and Apple purchase confirmation.</li>
+  <li><strong>Annual</strong>: the localized annual price shown at checkout. Any trial, its length and renewal price depend on the offer shown for your account and your eligibility.</li>
 </ul>
 <p>Payment is processed by <strong>Apple</strong>. Subscriptions auto-renew unless canceled at least 24 hours before the end of the current period. Manage or cancel anytime in Settings → Apple ID → Subscriptions.</p>
 <p>We use <strong>RevenueCat</strong> to verify entitlement state. RevenueCat stores an anonymous identifier and subscription status — never your payment details.</p>
@@ -134,21 +140,24 @@
 </ul>
 <p>Email <a href="mailto:contact@universalaillc.com">contact@universalaillc.com</a> with the subject line "Jineo Data Request" and we will respond within 30 days.</p>
 <p><strong>EU / UK users (GDPR):</strong> our legal basis for processing is (a) performing the service you asked for, (b) your consent where required, and (c) our legitimate interest in operating a safe product. You have the rights listed above plus the right to lodge a complaint with your local supervisory authority (e.g. ICO in the UK, CNIL in France).</p>
-<p><strong>California users (CCPA / CPRA):</strong> we do not sell or share personal information for cross-context behavioral advertising. We do not knowingly collect data from minors under 16. You may request a copy of categories collected, deletion, and correction by emailing the address above; we will not retaliate for exercising these rights.</p>
-<p><strong>How to delete your account:</strong> in the app go to Settings → Delete account, or email <a href="mailto:contact@universalaillc.com">contact@universalaillc.com</a> with the subject "Delete my Jineo account". We will erase your data within 30 days.</p>
+<p><strong>California users (CCPA / CPRA):</strong> we do not sell or share personal information for cross-context behavioral advertising. You may request a copy of categories collected, deletion, and correction by emailing the address above; we will not retaliate for exercising these rights.</p>
+<p><strong>How to delete your account:</strong> in the app go to You → Data &amp; privacy → Delete account, or email <a href="mailto:contact@universalaillc.com">contact@universalaillc.com</a> with the subject "Delete my Jineo account". We will erase your data within 30 days.</p>
+
+<h2>Export and restore</h2>
+<p>Use You → Data &amp; privacy → Download my data to export local records, and Restore from a backup file to import them. The JSON backup is not encrypted and can include sensitive entries such as pregnancy or nursing status, cycle dates, allergies, chat and notes. Store it privately. Restoring an Apple purchase restores entitlement, not these local records. Contact us about the server-side records listed above.</p>
 
 <h2>Data retention</h2>
 <ul>
   <li><strong>Selfies</strong>: discarded immediately after the one-time OpenAI analysis (never written to our durable storage; OpenAI may retain the API request up to 30 days for its own abuse monitoring, then deletes it)</li>
   <li><strong>Scan-activity record</strong> (device/account id, scan type, salted IP hash — never the image): up to 90 days, then auto-deleted</li>
   <li><strong>Scan scores, routines and scan history</strong>: stored on your device — kept until you delete your data, delete your account, or remove the app. They are never persisted to our servers, so there is nothing on our side to retain</li>
-  <li><strong>Scan timeline thumbnail</strong>: stored on your device on the same basis as your scores above, and removed when you delete your data or your account</li>
+  <li><strong>Scan timeline preview</strong>: current previews use an evictable local cache and may be cleared by iOS. Deleting app data removes local app copies; it does not erase existing exports, Photos copies or device backups.</li>
   <li><strong>Diary entries</strong>: retained until you delete them or close your account</li>
   <li><strong>Subscription status</strong>: retained as long as required by tax + accounting law (typically 7 years post-termination)</li>
 </ul>
 
 <h2>Children</h2>
-<p>Jineo is rated 4+ for content, but the service is <strong>not directed to children under 13</strong>. We do not knowingly collect information from children under 13. If we learn we have, we will delete it. Parents/guardians can email us to request deletion.</p>
+<p>Jineo is intended for users aged 13 and older. We do not knowingly collect information from children under 13. AI face scans, Hana chat and Jineo Pro require users to be 18 or older. Users aged 13–17 have a free, non-biometric experience with questionnaire-based routines, product checks by name, a shelf, the ingredient scanner and glossary. If you believe a minor has had biometric data processed, contact us to request investigation and deletion.</p>
 
 <h2>Third-party services</h2>
 <p>We use a small number of well-known vendors:</p>
@@ -157,12 +166,11 @@
   <li><strong>Supabase (US) Inc.</strong> — edge-function proxy + account database</li>
   <li><strong>OpenAI</strong> — AI skin-scan analysis (Vision API) and the Hana coach (language model)</li>
   <li><strong>RevenueCat, Inc.</strong> — subscription entitlement verification</li>
-  <li><strong>ElevenLabs</strong> — Hana voice text-to-speech (Pro only; text-only payloads, no user identifiers)</li>
+  <li><strong>ElevenLabs</strong> — text-to-speech where a read-aloud button appears (Pro only; text-only payloads, no user identifiers). Result-screen read-aloud is currently switched off.</li>
   <li><strong>PostHog</strong> — pseudonymous product analytics; <strong>Sentry</strong> — crash diagnostics (PII scrubbed); <strong>Resend</strong> — transactional email</li>
-  <li><strong>Apple</strong> — push notifications (APNs)</li>
+  <li><strong>Expo and Apple</strong> — push notification delivery</li>
 </ul>
-<p>Each vendor processes data only as our contracted data processor. None of them receives your data to sell or to train their own models on your identity.</p>
-<p>Each vendor processes data only as our contracted data processor. We have data-processing addenda with all of them.</p>
+<p>These services process data under their applicable service and data-processing terms. See the data and retention disclosures above for what Jineo sends or stores.</p>
 
 <h2>International transfers</h2>
 <p>Our primary servers are in the United States. If you use Jineo from outside the US, your data may be transferred to and processed in the US. Where required by law (e.g. EU → US), we rely on Standard Contractual Clauses or the EU-U.S. Data Privacy Framework.</p>
@@ -170,8 +178,8 @@
 <h2>Security</h2>
 <ul>
   <li>All traffic is encrypted (TLS 1.2+)</li>
-  <li>Stored data is encrypted at rest</li>
-  <li>Access is restricted to authorized engineers via SSO</li>
+  <li>Device storage uses iOS protections. Exported JSON backups are not encrypted by Jineo; protect them separately.</li>
+  <li>Server functions verify account and permission requirements for protected requests</li>
   <li>We run regular dependency audits</li>
 </ul>
 <p>No service is 100% secure. If we discover a breach that affects you, we will notify you within the legal notification window.</p>
