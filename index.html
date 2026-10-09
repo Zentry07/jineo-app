@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Jineo — Korean skincare, decoded. A 10-second skin scan for iPhone</title>
+<link rel="canonical" href="https://jineo.app/">
 <meta name="description" content="One selfie → Skin Type 16, 12-tone Personal Color and honest 0–100 scores on real Korean products. Scan any label. No paid rankings. Free first scan on iPhone.">
 <meta property="og:title" content="Jineo — Korean skincare, decoded.">
 <meta property="og:description" content="A 10-second skin scan, honest 0–100 scores, and a K-beauty coach — real Korean brands only. Free first scan on iPhone.">
@@ -17,12 +18,26 @@
 <meta name="twitter:image" content="https://jineo.app/assets/og.png">
 <meta name="theme-color" content="#FFFCFA">
 <script>document.documentElement.classList.add("js")</script>
-<link rel="icon" type="image/png" href="/favicon.png">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@500;700;900&family=DM+Serif+Display&family=Noto+Sans+KR:wght@700&family=Space+Grotesk:wght@700&display=swap">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@500;700;900&family=DM+Serif+Display&family=Noto+Sans+KR:wght@700&family=Space+Grotesk:wght@700&display=swap" media="print" onload="this.media='all'">
-<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@500;700;900&family=DM+Serif+Display&family=Noto+Sans+KR:wght@700&family=Space+Grotesk:wght@700&display=swap"></noscript>
+<link rel="icon" type="image/png" sizes="64x64" href="/favicon.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<!-- Fonts are self-hosted (Google's own latin/latin-ext woff2 slices + a Noto Sans KR subset of the glyphs this site uses):
+     no third-party connection before first paint. Re-fetch slices from fonts.googleapis.com if a family/weight is added. -->
+<link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/fonts/DMSerifDisplay-400-latin.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/fonts/DMSans-500-latin.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/fonts/DMSans-700-latin.woff2">
+<style>
+@font-face{font-family:'DM Sans';font-style:normal;font-weight:500;font-display:swap;src:url(/assets/fonts/DMSans-500-latin-ext.woff2) format('woff2');unicode-range:U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;}
+@font-face{font-family:'DM Sans';font-style:normal;font-weight:500;font-display:swap;src:url(/assets/fonts/DMSans-500-latin.woff2) format('woff2');unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;}
+@font-face{font-family:'DM Sans';font-style:normal;font-weight:700;font-display:swap;src:url(/assets/fonts/DMSans-700-latin-ext.woff2) format('woff2');unicode-range:U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;}
+@font-face{font-family:'DM Sans';font-style:normal;font-weight:700;font-display:swap;src:url(/assets/fonts/DMSans-700-latin.woff2) format('woff2');unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;}
+@font-face{font-family:'DM Sans';font-style:normal;font-weight:900;font-display:swap;src:url(/assets/fonts/DMSans-900-latin-ext.woff2) format('woff2');unicode-range:U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;}
+@font-face{font-family:'DM Sans';font-style:normal;font-weight:900;font-display:swap;src:url(/assets/fonts/DMSans-900-latin.woff2) format('woff2');unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;}
+@font-face{font-family:'DM Serif Display';font-style:normal;font-weight:400;font-display:swap;src:url(/assets/fonts/DMSerifDisplay-400-latin-ext.woff2) format('woff2');unicode-range:U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;}
+@font-face{font-family:'DM Serif Display';font-style:normal;font-weight:400;font-display:swap;src:url(/assets/fonts/DMSerifDisplay-400-latin.woff2) format('woff2');unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;}
+@font-face{font-family:'Space Grotesk';font-style:normal;font-weight:700;font-display:swap;src:url(/assets/fonts/SpaceGrotesk-700-latin-ext.woff2) format('woff2');unicode-range:U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;}
+@font-face{font-family:'Space Grotesk';font-style:normal;font-weight:700;font-display:swap;src:url(/assets/fonts/SpaceGrotesk-700-latin.woff2) format('woff2');unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;}
+@font-face{font-family:'Noto Sans KR';font-style:normal;font-weight:700;font-display:swap;src:url(/assets/fonts/NotoSansKR-700-subset.woff2) format('woff2');unicode-range:U+00B7,U+3131-318E,U+AC00-D7A3;}
+</style>
 <style>
   /* ── Seoul Clinic tokens — mirrors the app's lib/tokens.ts ── */
   :root {
@@ -172,7 +187,7 @@
   .final { text-align: center; padding: 76px 0 24px; }
   .price { color: var(--quiet); font-size: 14px; margin-top: 16px; }
   footer { text-align: center; padding: 48px 24px 96px; color: var(--quiet); font-size: 13px; }
-  footer a { color: var(--pink-text); text-decoration: none; margin: 0 10px; font-weight: 600; } footer a:hover { text-decoration: underline; }
+  footer a { color: var(--pink-text); text-decoration: none; margin: 0 10px; font-weight: 600; display: inline-block; padding: 8px 6px; } footer a:hover { text-decoration: underline; }
   .seal { margin-top: 22px; font-family: var(--kr); color: var(--pink-text); font-weight: 700; letter-spacing: 12px; font-size: 13px; }
 
   /* mobile sticky CTA */
@@ -204,6 +219,37 @@
     html.js .reveal { opacity: 1; transform: none; transition: none; } .device { transform: none; }
   }
 </style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Jineo: Korean Skin Scan",
+  "operatingSystem": "iOS",
+  "applicationCategory": "LifestyleApplication",
+  "url": "https://jineo.app/",
+  "installUrl": "https://apps.apple.com/app/apple-store/id6762692530?pt=128096369&ct=website&mt=8",
+  "author": {
+    "@type": "Organization",
+    "name": "Universal AI LLC",
+    "url": "https://universalaillc.com"
+  },
+  "description": "One selfie → Skin Type 16, 12-tone Personal Color and honest 0–100 scores on real Korean products. Scan any label. No paid rankings. Free first scan on iPhone.",
+  "offers": [
+    {
+      "@type": "Offer",
+      "price": "59.99",
+      "priceCurrency": "USD",
+      "name": "Jineo Pro — annual"
+    },
+    {
+      "@type": "Offer",
+      "price": "5.99",
+      "priceCurrency": "USD",
+      "name": "Jineo Pro — weekly"
+    }
+  ]
+}
+</script>
 </head>
 <body>
 
@@ -242,7 +288,7 @@
       <p class="eyebrow">10-second skin scan <span class="kr">한 · 뷰티</span></p>
       <h1>Korean skincare,<br><em>decoded.</em></h1>
       <p class="promise">Buy less. Choose better. Build a routine that works.</p>
-      <p class="truth">One selfie reads your skin — Skin Type 16, 12-tone Personal Color, water–oil map, pores and marks by zone — then scores real Korean products honestly. Scan any label. Every skin tone.</p>
+      <p class="truth">One selfie reads your skin — Skin Type 16, 12-tone Personal Color, water–oil map, pores and marks by zone — then scores real Korean products honestly. Scan any label.</p>
       <div class="ctas">
         <a class="btn btn-pink" href="https://apps.apple.com/app/apple-store/id6762692530?pt=128096369&ct=website&mt=8" target="_blank" rel="noopener">Free first scan on iPhone →</a>
         <a class="btn btn-ghost" href="#scan">Watch it read skin</a>

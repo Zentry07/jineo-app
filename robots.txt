@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://jineo.app/sitemap.xml
