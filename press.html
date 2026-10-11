@@ -13,12 +13,27 @@
 <link rel="icon" type="image/png" sizes="64x64" href="/favicon.png">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <style>
+@font-face{font-family:'DM Sans';font-style:normal;font-weight:500;font-display:swap;src:url(/assets/fonts/DMSans-500-latin-ext.woff2) format('woff2');unicode-range:U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;}
+@font-face{font-family:'DM Sans';font-style:normal;font-weight:500;font-display:swap;src:url(/assets/fonts/DMSans-500-latin.woff2) format('woff2');unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;}
+@font-face{font-family:'DM Sans';font-style:normal;font-weight:700;font-display:swap;src:url(/assets/fonts/DMSans-700-latin-ext.woff2) format('woff2');unicode-range:U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;}
+@font-face{font-family:'DM Sans';font-style:normal;font-weight:700;font-display:swap;src:url(/assets/fonts/DMSans-700-latin.woff2) format('woff2');unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;}
+@font-face{font-family:'DM Sans';font-style:normal;font-weight:900;font-display:swap;src:url(/assets/fonts/DMSans-900-latin-ext.woff2) format('woff2');unicode-range:U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;}
+@font-face{font-family:'DM Sans';font-style:normal;font-weight:900;font-display:swap;src:url(/assets/fonts/DMSans-900-latin.woff2) format('woff2');unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;}
+@font-face{font-family:'Noto Sans KR';font-style:normal;font-weight:700;font-display:swap;src:url(/assets/fonts/NotoSansKR-700-subset.woff2) format('woff2');unicode-range:U+00B7,U+3131-318E,U+AC00-D7A3;}
+</style>
+<style>
   :root {
-    --bg: #FAF7F2; --bg-deep: #F0E8DC; --ink: #1A1715; --ink-soft: #5C4A42;
-    --peach: #E07788; --peach-deep: #B04268; --gold: #C9A961; --gold-deep: #8C6B3A;
+    /* Seoul Lab tokens (mirrors index.html); legacy names kept as aliases so page rules keep working */
+    --cream: #FFF9F4; --porcelain: #FFFEFB; --ink: #171715; --quiet: #6D6A64;
+    --pink: #EE5A84; --pink-text: #B03059; --pink-glow: #FFE1EA; --gold: #C7A45A; --gold-text: #8C6B3A;
+    --hair: rgba(26,23,21,0.10); --warm: rgba(120,80,60,0.10);
+    --depth: 0 1px 3px rgba(26,23,21,0.06), 0 8px 24px rgba(26,23,21,0.08);
+    --sans: "DM Sans", -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, sans-serif;
+    --kr: "Noto Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+    --bg: var(--cream); --bg-deep: #FFF7F1; --ink-soft: var(--quiet); --peach: var(--pink); --peach-deep: var(--pink-text); --gold-deep: var(--gold-text);
   }
   * { box-sizing: border-box; }
-  body { font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "DM Sans", "Segoe UI", Roboto, sans-serif;
+  body { font-family: var(--sans);
     margin: 0; background: linear-gradient(180deg, var(--bg) 0%, var(--bg-deep) 100%);
     color: var(--ink); line-height: 1.6; min-height: 100vh; }
   .wrap { max-width: 720px; margin: 0 auto; padding: 48px 24px 80px; }
@@ -50,9 +65,51 @@
   footer { text-align: center; padding: 40px 24px 0; color: var(--ink-soft); font-size: 13px; }
   footer a { text-decoration: none; margin: 0 10px; font-weight: 600; display: inline-block; padding: 8px 6px; }
   .seal { margin-top: 24px; font-family: "Noto Sans KR", serif; color: var(--gold-deep); font-weight: 700; letter-spacing: 12px; font-size: 13px; }
+  /* ── Seoul Lab shared chrome: one glass nav bar + lockup + footer (mirrors index.html) ── */
+  .top { position: sticky; top: 0; z-index: 40; background: rgba(255,249,244,0.94); border-bottom: 1px solid var(--warm); }
+  @supports ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) { .top { background: rgba(255,249,244,0.68); -webkit-backdrop-filter: blur(18px) saturate(1.4); backdrop-filter: blur(18px) saturate(1.4); } }
+  .top .bar { max-width: 1120px; margin: 0 auto; padding: 0 24px; display: flex; align-items: center; justify-content: space-between; gap: 16px; height: 64px; }
+  .lockup { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; color: var(--ink); min-height: 44px; font-family: var(--sans); }
+  .lockup svg { width: 32px; height: 32px; flex: none; }
+  .lockup .word { font-weight: 900; font-size: 18px; letter-spacing: .12em; line-height: 1; color: var(--ink); }
+  .lockup .tag { font-family: var(--kr); font-weight: 700; font-size: 14px; color: var(--quiet); letter-spacing: .02em; margin-left: 2px; }
+  .top nav.links { display: flex; gap: 4px; font-size: 14px; font-weight: 700; margin: 0; }
+  .top nav.links a { display: inline-flex; align-items: center; min-height: 44px; padding: 0 11px; margin: 0; color: var(--ink); text-decoration: none; opacity: .78; border-radius: 10px; font-weight: 700; }
+  .top nav.links a:hover, .lockup:hover, .btn-ink:hover { text-decoration: none; }
+  .top nav.links a:hover { opacity: 1; background: rgba(26,23,21,0.04); }
+  .btn-ink { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; padding: 10px 18px; border-radius: 999px; background: var(--ink); color: var(--cream); font-family: var(--sans); font-weight: 700; font-size: 14px; text-decoration: none; white-space: nowrap; }
+  .site-foot { text-align: center; padding: 48px 24px 72px; margin: 0; border: 0; color: var(--quiet); font-size: 13px; font-family: var(--sans); }
+  .site-foot a { color: var(--pink-text); text-decoration: none; margin: 0 6px; font-weight: 600; display: inline-block; padding: 12px 8px; }
+  .site-foot a:hover { text-decoration: underline; }
+  :focus-visible { outline: 2px solid var(--pink-text); outline-offset: 3px; border-radius: 6px; }
+  @media (max-width: 720px) { .top nav.links { display: none; } }
 </style>
 </head>
 <body>
+<header class="top">
+  <div class="bar">
+    <a class="lockup" href="/">
+      <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <defs>
+          <radialGradient id="body" cx="0.36" cy="0.28" r="0.82"><stop offset="0" stop-color="#F7DBCE"/><stop offset="0.55" stop-color="#EDA899"/><stop offset="1" stop-color="#C76D79"/></radialGradient>
+          <radialGradient id="gloss" cx="0.30" cy="0.22" r="0.28"><stop offset="0" stop-color="#FFFFFF" stop-opacity="0.58"/><stop offset="1" stop-color="#FFFFFF" stop-opacity="0"/></radialGradient>
+          <linearGradient id="leaf" x1="0.1" y1="0.1" x2="0.9" y2="0.9"><stop offset="0" stop-color="#A6BF8C"/><stop offset="0.55" stop-color="#7A9868"/><stop offset="1" stop-color="#4F6F40"/></linearGradient>
+        </defs>
+        <path d="M 512 195 C 512 165, 522 135, 552 112" stroke="#6B4A2F" stroke-width="18" stroke-linecap="round" fill="none"/>
+        <g transform="translate(618 118) rotate(28)"><path d="M 0 0 C 40 -26, 120 -22, 160 14 C 130 42, 60 48, 0 0 Z" fill="url(#leaf)"/></g>
+        <path d="M 512 200 C 332 200, 140 320, 140 570 C 140 810, 295 955, 512 955 C 729 955, 884 810, 884 570 C 884 320, 692 200, 512 200 Z" fill="url(#body)"/>
+        <ellipse cx="356" cy="400" rx="160" ry="108" fill="url(#gloss)"/>
+        <path d="M 345 560 C 372 524, 422 524, 449 560" stroke="#3F1C2C" stroke-width="20" stroke-linecap="round" fill="none"/>
+        <path d="M 575 560 C 602 524, 652 524, 679 560" stroke="#3F1C2C" stroke-width="20" stroke-linecap="round" fill="none"/>
+        <path d="M 458 730 Q 512 758, 566 730" stroke="#3F1C2C" stroke-width="18" stroke-linecap="round" fill="none"/>
+        <circle cx="318" cy="680" r="42" fill="#B85C7A" fill-opacity="0.30"/><circle cx="706" cy="680" r="42" fill="#B85C7A" fill-opacity="0.30"/>
+      </svg>
+      <span class="word">JINEO<span class="tag" lang="ko"> · 진</span></span>
+    </a>
+    <nav class="links" aria-label="Site"><a href="/">Home</a><a href="/faq.html">FAQ</a><a href="/press.html">Press</a><a href="/support.html">Support</a></nav>
+    <a class="btn-ink" href="https://apps.apple.com/app/apple-store/id6762692530?pt=128096369&ct=website&mt=8" target="_blank" rel="noopener">Get the app</a>
+  </div>
+</header>
 <div class="wrap">
 
   <div class="kicker">프레스 · PRESS</div>
@@ -111,12 +168,9 @@
 
 </div>
 
-<footer>
-  <a href="/">Home</a>
-  <a href="/privacy.html">Privacy</a>
-  <a href="/terms.html">Terms</a>
-  <a href="/support.html">Support</a>
-  <div style="margin-top:16px; font-size:12px; opacity:0.72;">© 2026 Universal AI LLC</div>
+<footer class="site-foot">
+  <a href="/privacy.html">Privacy Policy</a><a href="/terms.html">Terms of Service</a><a href="/support.html">Support</a><a href="/press.html">Press</a><a href="/faq.html">FAQ</a>
+  <div style="margin-top:16px; font-size:12px;">© 2026 Universal AI LLC</div>
 </footer>
 </body>
 </html>

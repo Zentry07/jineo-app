@@ -16,15 +16,18 @@
 <meta name="twitter:title" content="Jineo — Korean skincare, decoded.">
 <meta name="twitter:description" content="A 10-second skin scan, honest 0–100 scores, and a K-beauty coach — real Korean brands only. Free first scan on iPhone.">
 <meta name="twitter:image" content="https://jineo.app/assets/og.png">
-<meta name="theme-color" content="#FFFCFA">
+<meta name="theme-color" content="#FFF9F4">
 <script>document.documentElement.classList.add("js")</script>
 <link rel="icon" type="image/png" sizes="64x64" href="/favicon.png">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <!-- Fonts are self-hosted (Google's own latin/latin-ext woff2 slices + a Noto Sans KR subset of the glyphs this site uses):
-     no third-party connection before first paint. Re-fetch slices from fonts.googleapis.com if a family/weight is added. -->
-<link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/fonts/DMSerifDisplay-400-latin.woff2">
+     no third-party connection before first paint. Re-fetch slices from fonts.googleapis.com if a family/weight is added.
+     The Noto subset holds exactly 69 Hangul syllables — any new Korean word on this site must be made of them or the subset must be re-cut. -->
+<link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/fonts/DMSans-900-latin.woff2">
 <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/fonts/DMSans-500-latin.woff2">
 <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/fonts/DMSans-700-latin.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/fonts/SpaceGrotesk-700-latin.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/fonts/NotoSansKR-700-subset.woff2">
 <style>
 @font-face{font-family:'DM Sans';font-style:normal;font-weight:500;font-display:swap;src:url(/assets/fonts/DMSans-500-latin-ext.woff2) format('woff2');unicode-range:U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;}
 @font-face{font-family:'DM Sans';font-style:normal;font-weight:500;font-display:swap;src:url(/assets/fonts/DMSans-500-latin.woff2) format('woff2');unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;}
@@ -39,191 +42,270 @@
 @font-face{font-family:'Noto Sans KR';font-style:normal;font-weight:700;font-display:swap;src:url(/assets/fonts/NotoSansKR-700-subset.woff2) format('woff2');unicode-range:U+00B7,U+3131-318E,U+AC00-D7A3;}
 </style>
 <style>
-  /* ── Seoul Clinic tokens — mirrors the app's lib/tokens.ts ── */
+  /* ── Seoul Lab tokens — mirrors the app's lib/tokens.ts (BRAND + LAB) ── */
   :root {
-    --g0: #FFFCFA; --g1: #FCEFE6;
-    --porcelain: #FFFEFB; --hanji: #F7F4EE;
+    --cream: #FFF9F4; --porcelain: #FFFEFB;
     --ink: #171715; --quiet: #6D6A64;
-    --pink: #EE5A84; --pink-deep: #C93E68; --pink-text: #B03059; --pink-glow: #FFE1EA;
-    --plum: #3A1F3F; --navy: #221C26; --night: #17131A;   /* diagnostic navy: scan moments ONLY */
-    --gold: #C7A45A; --match: #35685A; --lavender: #B4A9C9;
+    --pink: #EE5A84; --pink-deep: #C93E68; --pink-text: #B03059; --pink-glow: #FFE1EA;   /* pink = the only tinted action */
+    --celadon: #9AB7A5; --celadon-deep: #55766A;
+    --gold: #C7A45A; --gold-text: #8C6B3A;                                               /* gold = premium seal only */
+    --navy: #162D3D;                                                                     /* diagnostic navy: the capture bay only */
+    --blush: #FFE9EE; --pearl: #FFF7F1; --sage: #EEF3EE;                                /* mesh stops, static */
+    --hair: rgba(26,23,21,0.10); --warm: rgba(120,80,60,0.10);
+    --depth: 0 1px 3px rgba(26,23,21,0.06), 0 8px 24px rgba(26,23,21,0.08);
+    --raised: 0 2px 6px rgba(26,23,21,0.08), 0 16px 40px rgba(26,23,21,0.10);
+    --rim: inset 0 1px 0 rgba(255,255,255,0.65), inset 0 -1px 0 rgba(26,23,21,0.06);
+    --fine-bg: #EEF5EA; --fine-ink: #2F5A3B; --watch-bg: #FFF3DD; --watch-ink: #7A5A1C; --care-bg: #FFE6E6; --care-ink: #8A2E3B;
+    --foil: conic-gradient(from 140deg at 50% 50%, #FFD9CD, #FFF3C4, #DDEFE6, #E6DDF5, #FFD9CD);
     --sans: "DM Sans", -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, sans-serif;
     --serif: "DM Serif Display", Georgia, "Times New Roman", serif;
     --mono: "Space Grotesk", ui-monospace, Menlo, monospace;
-    --kr: "Noto Sans KR", "Apple SD Gothic Neo", sans-serif;
-    --r: 22px;
+    --kr: "Noto Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+    --r-chip: 10px; --r-ctl: 14px; --r-card: 20px; --r-sheet: 28px;
   }
   * { box-sizing: border-box; }
   html { scroll-behavior: smooth; }
-  body { margin: 0; overflow-x: clip; font-family: var(--sans); color: var(--ink); line-height: 1.55; -webkit-font-smoothing: antialiased;
-    background: linear-gradient(180deg, var(--g0) 0%, var(--g1) 100%); min-height: 100vh; }
-  body::before { content: ""; position: fixed; inset: 0; z-index: -1; pointer-events: none;
-    background: radial-gradient(560px 560px at 8% 10%, rgba(238,90,132,0.30), transparent 62%),
-                radial-gradient(640px 640px at 94% 94%, rgba(199,164,90,0.22), transparent 62%); }
+  body { margin: 0; overflow-x: clip; font-family: var(--sans); font-weight: 500; color: var(--ink); line-height: 1.55; -webkit-font-smoothing: antialiased; background: var(--cream); min-height: 100vh; }
   a { color: var(--pink-text); }
+  :focus-visible { outline: 2px solid var(--pink-text); outline-offset: 3px; border-radius: 6px; }
+  img { max-width: 100%; }
   .wrap { max-width: 1120px; margin: 0 auto; padding: 0 24px; min-width: 0; }
-  .hero > div, .scan-grid > div { min-width: 0; }
-  .eyebrow { font-weight: 700; font-size: 12px; letter-spacing: .28em; text-transform: uppercase; color: var(--pink-text); margin: 0 0 14px; }
-  .eyebrow .kr { font-family: var(--kr); letter-spacing: .4em; margin-left: 10px; color: var(--quiet); }
-  h1, h2 { font-family: var(--serif); font-weight: 400; letter-spacing: -0.01em; }
-  h1 { font-size: clamp(46px, 6.4vw, 82px); line-height: 1.0; margin: 0 0 20px; }
-  h1 em, h2 em { font-style: normal; color: var(--pink); }
-  h2 { font-size: clamp(32px, 3.8vw, 48px); line-height: 1.08; margin: 0 0 10px; }
-  .sub { color: var(--quiet); font-size: 17px; margin: 0 0 30px; max-width: 640px; }
+  .kr { font-family: var(--kr); }
 
-  /* buttons */
-  .btn { display: inline-flex; align-items: center; gap: 8px; padding: 13px 22px; border-radius: 999px; text-decoration: none;
-    font-weight: 700; font-size: 15px; white-space: nowrap; transition: transform 160ms ease, box-shadow 160ms ease; }
-  .btn-pink { background: var(--pink); color: var(--porcelain); box-shadow: 0 12px 30px rgba(238,90,132,0.30); }
-  .btn-pink:hover { transform: translateY(-1px); box-shadow: 0 16px 38px rgba(238,90,132,0.38); }
-  .btn-ghost { color: var(--ink); background: rgba(255,254,251,0.7); border: 1px solid rgba(23,23,21,0.10); }
-  .btn-ghost:hover { transform: translateY(-1px); }
-  .btn-light { background: var(--porcelain); color: var(--ink); }
-  .btn-light:hover { transform: translateY(-1px); }
+  /* ── mesh ground: static, hero + final bands only; copy never sits on it without a card ── */
+  .band { position: relative; isolation: isolate; }
+  .band::before { content: ""; position: absolute; inset: -80px 0 0; z-index: -1; pointer-events: none;
+    background:
+      radial-gradient(58% 52% at 10% 6%, var(--blush) 0%, rgba(255,233,238,0) 72%),
+      radial-gradient(54% 48% at 90% 14%, var(--sage) 0%, rgba(238,243,238,0) 72%),
+      radial-gradient(72% 60% at 50% 92%, var(--pearl) 0%, rgba(255,247,241,0) 72%);
+    -webkit-mask-image: linear-gradient(to bottom, #000 62%, transparent 100%); mask-image: linear-gradient(to bottom, #000 62%, transparent 100%); }
+  .band.final-band::before { inset: 0; -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 40%); mask-image: linear-gradient(to bottom, transparent 0%, #000 40%); }
 
-  /* header */
-  header { position: sticky; top: 0; z-index: 20; backdrop-filter: blur(14px); background: rgba(255,252,250,0.72); border-bottom: 1px solid rgba(23,23,21,0.05); }
-  .bar { display: flex; align-items: center; justify-content: space-between; gap: 16px; height: 68px; }
-  .brand { display: flex; align-items: center; gap: 12px; text-decoration: none; color: var(--ink); }
-  .brand svg { width: 38px; height: 38px; }
-  .wordmark { font-weight: 900; letter-spacing: .14em; font-size: 19px; }
-  .wordmark .kr { font-family: var(--kr); font-weight: 700; letter-spacing: .3em; color: var(--quiet); font-size: 12px; margin-left: 10px; }
-  nav.links { display: flex; gap: 22px; font-size: 14px; font-weight: 700; }
-  nav.links a { color: var(--ink); text-decoration: none; opacity: .75; } nav.links a:hover { opacity: 1; }
+  /* ── type ── */
+  .kicker { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0 8px; margin: 0 0 14px; font-size: 12.5px; font-weight: 700; letter-spacing: .10em; text-transform: uppercase; color: var(--pink-text); }
+  .kicker .kr { font-size: 12px; text-transform: none; letter-spacing: .04em; color: var(--quiet); }
+  .kicker .kr::before { content: "·"; margin-right: 8px; }
+  h1, h2 { font-family: var(--sans); font-weight: 900; letter-spacing: -0.035em; line-height: 1.0; margin: 0 0 16px; }
+  h1 { font-size: clamp(42px, 6vw, 74px); }
+  h2 { font-size: clamp(30px, 3.6vw, 46px); line-height: 1.04; letter-spacing: -0.03em; }
+  h3 { font-weight: 700; letter-spacing: -0.01em; }
+  .sub { color: var(--quiet); font-size: 17px; margin: 0 0 28px; max-width: 640px; }
+  .head { max-width: 760px; }
 
-  /* hero */
-  .hero { display: grid; grid-template-columns: 1.05fr 0.95fr; gap: 48px; align-items: center; padding: 64px 0 20px; }
-  .promise { font-size: 22px; line-height: 1.4; margin: 0 0 12px; font-weight: 500; }
-  .truth { font-size: 17px; color: var(--quiet); margin: 0 0 28px; max-width: 520px; }
+  /* ── cards: opaque reading surfaces, two-tier depth, warm 1px border ── */
+  .card { background: var(--porcelain); border: 1px solid var(--warm); border-radius: var(--r-card); box-shadow: var(--depth); }
+  .lift { transition: transform 160ms ease, box-shadow 160ms ease; }
+  .lift:hover { transform: translateY(-2px); box-shadow: var(--raised); }
+
+  /* ── buttons (pink text sits at large-text size so white on Seoul Pink clears WCAG) ── */
+  .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 48px; padding: 12px 24px; border-radius: 999px; text-decoration: none;
+    font-weight: 700; font-size: 19px; letter-spacing: -0.01em; white-space: nowrap; transition: transform 160ms ease, box-shadow 160ms ease, background-color 160ms ease; }
+  .btn-pink { background: var(--pink); color: #fff; box-shadow: 0 1px 2px rgba(176,48,89,0.25), 0 10px 24px rgba(238,90,132,0.28); }
+  .btn-pink:hover { background: var(--pink-deep); transform: translateY(-2px); box-shadow: 0 2px 4px rgba(176,48,89,0.25), 0 14px 30px rgba(238,90,132,0.32); }
+  .btn-pink:active { transform: translateY(0) scale(.985); }
+  .btn-ghost { font-size: 15px; color: var(--ink); background: var(--porcelain); border: 1px solid var(--warm); box-shadow: var(--depth); }
+  .btn-ghost:hover { transform: translateY(-2px); box-shadow: var(--raised); }
+  .btn-ink { font-size: 14px; min-height: 44px; padding: 10px 18px; background: var(--ink); color: var(--cream); }
+  .btn-ink:hover { transform: translateY(-1px); }
+
+  /* ── one glass layer: the nav bar (regular, with a solid fallback) ── */
+  .top { position: sticky; top: 0; z-index: 40; background: rgba(255,249,244,0.94); border-bottom: 1px solid var(--warm); }
+  @supports ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) {
+    .top { background: rgba(255,249,244,0.68); -webkit-backdrop-filter: blur(18px) saturate(1.4); backdrop-filter: blur(18px) saturate(1.4); }
+  }
+  .bar { display: flex; align-items: center; justify-content: space-between; gap: 16px; height: 64px; }
+  .lockup { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; color: var(--ink); min-height: 44px; }
+  .lockup svg { width: 32px; height: 32px; flex: none; }
+  .lockup .word { font-weight: 900; font-size: 18px; letter-spacing: .12em; line-height: 1; }
+  .lockup .tag { font-family: var(--kr); font-weight: 700; font-size: 14px; color: var(--quiet); letter-spacing: .02em; margin-left: 2px; }
+  nav.links { display: flex; gap: 4px; font-size: 14px; font-weight: 700; }
+  nav.links a { display: inline-flex; align-items: center; min-height: 44px; padding: 0 11px; color: var(--ink); text-decoration: none; opacity: .78; border-radius: 10px; }
+  nav.links a:hover { opacity: 1; background: rgba(26,23,21,0.04); }
+
+  /* ── hero: the lab bench ── */
+  .hero { padding: 36px 0 10px; }
+  .bench { display: grid; grid-template-columns: 1.05fr .95fr; gap: 40px; align-items: center; padding: 40px 44px; border-radius: var(--r-sheet); }
+  .bench > div { min-width: 0; }
+  .greet { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; }
+  .greet img { width: 56px; height: 56px; flex: none; }
+  .bubble { position: relative; background: var(--cream); border: 1px solid var(--warm); border-radius: 14px; padding: 8px 12px; font-size: 14px; box-shadow: var(--rim); }
+  .bubble .kr { color: var(--quiet); margin-left: 6px; font-size: 13px; }
+  .bubble::before { content: ""; position: absolute; left: -6px; top: 50%; width: 10px; height: 10px; background: var(--cream); border-left: 1px solid var(--warm); border-bottom: 1px solid var(--warm); transform: translateY(-50%) rotate(45deg); }
+  .promise { font-size: 21px; line-height: 1.4; margin: 0 0 12px; font-weight: 500; }
+  .truth { font-size: 17px; color: var(--quiet); margin: 0 0 26px; max-width: 520px; }
   .ctas { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; margin-bottom: 14px; }
-  .fine { font-size: 13px; color: var(--quiet); }
-  .proof { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-top: 26px; padding-top: 22px; border-top: 1px solid rgba(23,23,21,0.08); }
-  .proof div { font-size: 13px; color: var(--quiet); } .proof b { display: block; font-family: var(--mono); font-size: 19px; color: var(--ink); letter-spacing: -.01em; }
-  .device-wrap { position: relative; display: flex; justify-content: center; }
-  .device { width: min(100%, 360px); max-height: 640px; object-fit: cover; object-position: top; border-radius: 44px 44px 36px 36px;
-    box-shadow: 0 34px 90px rgba(58,31,63,0.24), 0 4px 16px rgba(58,31,63,0.10); transform: rotate(-2.5deg); }
-  .tag { position: absolute; background: var(--porcelain); border: 1px solid rgba(23,23,21,0.06); border-radius: 999px; padding: 8px 14px;
-    font-size: 13px; font-weight: 700; box-shadow: 0 8px 24px rgba(58,31,63,0.10); animation: float 6s ease-in-out infinite; }
-  .tag-a { left: 2%; top: 14%; } .tag-b { right: 0; bottom: 18%; animation-delay: -3s; }
-  .dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: var(--pink); margin-right: 8px; vertical-align: middle; }
-  @keyframes float { 0%,100% { transform: translateY(0) } 50% { transform: translateY(-6px) } }
+  .fine { font-size: 13px; color: var(--quiet); margin: 0; }
+  .proof { display: grid; grid-template-columns: repeat(4, 1fr); margin-top: 26px; border-top: 1px solid var(--hair); }
+  .proof div { padding: 16px 12px 0 0; font-size: 13px; color: var(--quiet); line-height: 1.3; }
+  .proof div + div { border-left: 1px solid var(--hair); padding-left: 14px; }
+  .proof b { display: block; font-family: var(--mono); font-variant-numeric: tabular-nums; font-size: 24px; color: var(--ink); letter-spacing: -.01em; line-height: 1.1; margin-bottom: 4px; }
+
+  /* ── the capture bay: scanner HUD as a still (navy is allowed here and only here) ── */
+  .bay { background: var(--navy); border-radius: 24px; padding: 12px; color: rgba(255,255,255,0.86); box-shadow: var(--raised), inset 0 1px 0 rgba(255,255,255,0.08); }
+  .rail { display: flex; flex-wrap: wrap; gap: 8px; padding: 2px 4px 10px; }
+  .ro { display: inline-flex; align-items: center; gap: 7px; font-family: var(--mono); font-size: 11.5px; letter-spacing: .06em; text-transform: uppercase; padding: 6px 10px; border-radius: var(--r-chip); background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12); color: rgba(255,255,255,0.88); }
+  .lamp { width: 6px; height: 6px; border-radius: 50%; background: var(--celadon); box-shadow: 0 0 0 2px rgba(154,183,165,0.25); }
+  .frame { position: relative; aspect-ratio: 4 / 5; overflow: hidden; border-radius: 16px; background: #0F2230; }
+  /* the shot carries its own cut-off caption pills at the edges; the crop keeps them outside the frame */
+  .frame img { position: absolute; width: 123%; max-width: none; height: auto; left: -23%; top: -2%; display: block; }
+  .frame::before, .frame::after { content: ""; position: absolute; left: 0; right: 0; height: 18%; z-index: 1; pointer-events: none; }
+  .frame::before { top: 0; background: linear-gradient(to bottom, rgba(22,45,61,0.62), rgba(22,45,61,0)); }
+  .frame::after { bottom: 0; background: linear-gradient(to top, rgba(22,45,61,0.62), rgba(22,45,61,0)); }
+  .hud { position: absolute; inset: 0; z-index: 2; pointer-events: none; }
+  .corners { position: absolute; inset: 0; animation: tighten 600ms cubic-bezier(.2,.8,.2,1) 150ms both; }
+  .corner { position: absolute; width: 22px; height: 22px; border: 1px solid rgba(255,255,255,0.88); }
+  .c-tl { left: 12px; top: 12px; border-right: 0; border-bottom: 0; border-top-left-radius: 3px; }
+  .c-tr { right: 12px; top: 12px; border-left: 0; border-bottom: 0; border-top-right-radius: 3px; }
+  .c-bl { left: 12px; bottom: 12px; border-right: 0; border-top: 0; border-bottom-left-radius: 3px; }
+  .c-br { right: 12px; bottom: 12px; border-left: 0; border-top: 0; border-bottom-right-radius: 3px; }
+  .guide { position: absolute; left: 20%; top: 8%; width: 72%; height: 84%; border: 1px solid rgba(255,255,255,0.34); border-radius: 50%; }
+  .lm { position: absolute; width: 9px; height: 9px; margin: -4.5px 0 0 -4.5px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.92); background: rgba(255,255,255,0.14); opacity: 0; animation: lm 320ms ease-out both; animation-delay: var(--d, 0ms); }
+  .lm::after { content: ""; position: absolute; inset: 2.5px; border-radius: 50%; background: #fff; }
+  .sweep { position: absolute; left: 0; right: 0; top: -100%; height: 100%; z-index: 3; pointer-events: none; will-change: transform;
+    background: linear-gradient(to bottom, rgba(255,255,255,0) 70%, rgba(255,255,255,0.10) calc(100% - 2px), rgba(255,255,255,0.95) calc(100% - 2px), rgba(255,255,255,0.95) 100%);
+    filter: drop-shadow(0 0 8px rgba(255,255,255,0.45)); animation: sweep 1500ms cubic-bezier(.45,0,.2,1) 700ms 1 both; }
+  @keyframes sweep { 0% { transform: translateY(2%); opacity: 1 } 85% { opacity: 1 } 100% { transform: translateY(100%); opacity: 0 } }
+  @keyframes tighten { from { transform: scale(1.05); opacity: .4 } to { transform: none; opacity: 1 } }
+  @keyframes lm { from { opacity: 0; transform: scale(.6) } to { opacity: 1; transform: none } }
+  .dock { display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; padding: 10px 4px 2px; font-family: var(--mono); font-size: 11.5px; letter-spacing: .06em; text-transform: uppercase; color: rgba(255,255,255,0.74); }
 
   /* reads strip */
-  .reads { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; padding: 26px 0 6px; }
+  .reads { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; padding: 24px 0 0; }
   .chip { padding: 9px 16px; border-radius: 999px; background: var(--pink-glow); color: var(--pink-text); font-weight: 700; font-size: 13px; }
 
-  section { padding: 64px 0 8px; }
+  section { padding: 72px 0 8px; }
 
-  /* ── THE SCAN — the one dark, clinical moment ── */
-  .scan { margin-top: 56px; border-radius: 34px; overflow: hidden; color: #F7F1E8; position: relative;
-    background: radial-gradient(900px 600px at 20% 0%, rgba(238,90,132,0.28), transparent 60%),
-                radial-gradient(700px 500px at 90% 100%, rgba(199,164,90,0.18), transparent 60%),
-                linear-gradient(160deg, var(--navy), var(--night)); }
-  .scan::after { content: ""; position: absolute; inset: 0; pointer-events: none; opacity: .18;
-    background-image: linear-gradient(rgba(255,255,255,.06) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.06) 1px, transparent 1px);
-    background-size: 44px 44px; mask-image: radial-gradient(60% 60% at 50% 50%, #000, transparent); }
-  .scan-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; padding: 56px 48px; position: relative; z-index: 1; }
-  .scan h2 { color: #fff; } .scan .sub { color: rgba(247,241,232,0.72); }
-  .scan .eyebrow { color: var(--pink); } .scan .eyebrow .kr { color: rgba(247,241,232,0.55); }
-  .frame { position: relative; border-radius: 28px; overflow: hidden; box-shadow: 0 30px 80px rgba(0,0,0,0.45); border: 1px solid rgba(255,255,255,0.10); }
-  .frame img { width: 100%; height: auto; display: block; }
-  /* the line is the bottom 2px of a frame-height layer that starts one frame above; translateY(100%) walks it to the bottom — transform only, no layout */
-  .scanline { position: absolute; left: 0; right: 0; top: -100%; height: 100%; pointer-events: none; will-change: transform;
-    background: linear-gradient(to bottom, transparent calc(100% - 2px), rgba(238,90,132,0.95) calc(100% - 2px), rgba(238,90,132,0.95) 100%);
-    filter: drop-shadow(0 0 10px rgba(238,90,132,0.7)); animation: sweep 3.6s cubic-bezier(.4,0,.2,1) infinite alternate; }
-  @keyframes sweep { from { transform: translateY(6%) } to { transform: translateY(98%) } }
-  .bracket { position: absolute; width: 26px; height: 26px; border: 2px solid rgba(238,90,132,0.9); }
-  .bl-tl { left: 14px; top: 14px; border-right: 0; border-bottom: 0; } .bl-tr { right: 14px; top: 14px; border-left: 0; border-bottom: 0; }
-  .bl-bl { left: 14px; bottom: 14px; border-right: 0; border-top: 0; } .bl-br { right: 14px; bottom: 14px; border-left: 0; border-top: 0; }
-  .pip { position: absolute; padding: 6px 10px; border-radius: 999px; background: rgba(23,19,26,0.72); border: 1px solid rgba(255,255,255,0.14);
-    font-family: var(--mono); font-size: 12px; letter-spacing: .04em; color: #fff; animation: float 5s ease-in-out infinite; }
-  .pip i { display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: var(--pink); margin-right: 7px; box-shadow: 0 0 10px var(--pink); }
-  .p1 { left: 6%; top: 22%; } .p2 { right: 6%; top: 40%; animation-delay: -1.6s; } .p3 { left: 8%; bottom: 26%; animation-delay: -2.8s; } .p4 { right: 8%; bottom: 12%; animation-delay: -0.9s; }
-  .metrics { display: grid; gap: 14px; margin-top: 26px; }
-  .metric { display: grid; grid-template-columns: 150px 1fr 52px; align-items: center; gap: 14px; font-size: 14px; }
-  .metric .kr { font-family: var(--kr); color: rgba(247,241,232,0.5); margin-left: 8px; font-size: 12px; }
-  .track { height: 8px; border-radius: 999px; background: rgba(255,255,255,0.10); overflow: hidden; }
-  .fill { height: 100%; border-radius: 999px; background: linear-gradient(90deg, var(--pink), #FFB1C8); width: 0; animation: grow 1.6s cubic-bezier(.2,.8,.2,1) forwards; }
-  @keyframes grow { to { width: var(--w) } }
-  .metric b { font-family: var(--mono); text-align: right; }
-  .scan .note { font-size: 12px; color: rgba(247,241,232,0.5); margin-top: 18px; }
+  /* ── the read: type card with one iridescent edge + banded meters (words, never numbers) ── */
+  .read-grid { display: grid; grid-template-columns: .92fr 1.08fr; gap: 20px; align-items: stretch; }
+  .read-grid > * { min-width: 0; }
+  .foil { position: relative; border-radius: 22px; padding: 1.5px; background: var(--foil); box-shadow: var(--depth); }
+  .foil .inner { background: var(--porcelain); border-radius: 20.5px; padding: 28px 28px 24px; height: 100%; display: flex; flex-direction: column; }
+  .code { font-family: var(--mono); font-variant-numeric: tabular-nums; font-size: clamp(52px, 5vw, 64px); letter-spacing: .02em; line-height: 1; margin: 6px 0 10px; }
+  .kname { font-family: var(--kr); font-size: 22px; font-weight: 700; line-height: 1.2; }
+  .ename { font-family: var(--serif); font-weight: 400; font-size: 30px; letter-spacing: -0.01em; line-height: 1.1; margin: 2px 0 18px; }
+  .axes { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px; }
+  .axis { font-size: 12.5px; font-weight: 700; padding: 6px 10px; border-radius: var(--r-chip); background: var(--cream); border: 1px solid var(--warm); box-shadow: var(--rim); }
+  .stamp { margin-top: auto; padding-top: 16px; border-top: 1px solid var(--hair); display: flex; align-items: center; justify-content: space-between; gap: 12px; font-size: 13px; color: var(--quiet); }
+  .stamp .ro { color: var(--celadon-deep); background: var(--sage); border-color: rgba(85,118,106,0.18); }
+  .stamp .ro .lamp { background: var(--celadon-deep); box-shadow: none; }
+  .readout { padding: 28px; display: flex; flex-direction: column; }
+  .readout .kicker { margin-bottom: 20px; }
+  .meters { display: grid; gap: 18px; }
+  .mrow { display: grid; grid-template-columns: 150px 1fr 70px; align-items: center; gap: 14px; font-size: 14px; font-weight: 700; }
+  .mrow .kr { color: var(--quiet); margin-left: 8px; font-size: 12.5px; }
+  .track { position: relative; height: 10px; border-radius: 999px; overflow: hidden; box-shadow: var(--rim), inset 0 0 0 1px var(--hair);
+    background: linear-gradient(90deg, var(--care-bg) 0 33.3%, var(--watch-bg) 33.3% 66.6%, var(--fine-bg) 66.6% 100%); }
+  .track::before, .track::after { content: ""; position: absolute; top: 0; bottom: 0; width: 1px; background: rgba(26,23,21,0.10); }
+  .track::before { left: 33.3%; } .track::after { left: 66.6%; }
+  .fill { position: absolute; left: 0; top: 0; bottom: 0; width: 0; border-radius: 999px; background: var(--celadon-deep); transition: width 320ms ease-out; }
+  .in .fill, html:not(.js) .fill { width: var(--w); }
+  .word { justify-self: end; font-size: 11.5px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; padding: 4px 9px; border-radius: var(--r-chip); }
+  .word.fine { background: var(--fine-bg); color: var(--fine-ink); } .word.watch { background: var(--watch-bg); color: var(--watch-ink); } .word.care { background: var(--care-bg); color: var(--care-ink); }
+  .note { font-size: 12.5px; color: var(--quiet); margin: 22px 0 0; padding-top: 16px; border-top: 1px solid var(--hair); }
+
+  /* ── symbols: one stroke weight ── */
+  .sym { width: 44px; height: 44px; border-radius: var(--r-ctl); background: var(--cream); border: 1px solid var(--warm); box-shadow: var(--rim); display: grid; place-items: center; margin-bottom: 16px; }
+  .sym svg { width: 22px; height: 22px; stroke: var(--ink); fill: none; stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round; }
 
   /* how it works */
-  .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
-  .step { background: rgba(255,254,251,0.78); border: 1px solid rgba(23,23,21,0.06); border-radius: var(--r); padding: 26px 24px; }
-  .step .n { font-family: var(--serif); font-size: 44px; line-height: 1; color: var(--pink); margin-bottom: 12px; }
-  .step h3 { margin: 0 0 8px; font-size: 18px; } .step p { margin: 0; color: var(--quiet); font-size: 14.5px; }
+  .steps, .pillars { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+  .step, .pillar { padding: 26px 24px; }
+  .step .n { font-family: var(--mono); font-size: 12.5px; letter-spacing: .1em; color: var(--pink-text); margin-bottom: 14px; }
+  .step h3, .pillar h3 { margin: 0 0 8px; font-size: 19px; }
+  .step p, .pillar p { margin: 0; color: var(--quiet); font-size: 14.5px; }
+  .pillar .kicker { font-size: 11px; margin-bottom: 10px; }
 
-  /* pillars */
-  .pillars { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
-  .pillar { background: rgba(255,254,251,0.78); border: 1px solid rgba(23,23,21,0.06); border-radius: var(--r); padding: 24px 22px;
-    transition: transform 160ms ease, box-shadow 160ms ease; }
-  .pillar:hover { transform: translateY(-2px); box-shadow: 0 16px 40px rgba(58,31,63,0.10); }
-  .pillar .han { display: block; font-family: var(--kr); font-weight: 700; font-size: 11px; letter-spacing: .38em; color: var(--pink-text); margin-bottom: 12px; }
-  .pillar h3 { margin: 0 0 8px; font-size: 18px; } .pillar p { margin: 0; font-size: 14.5px; color: var(--quiet); }
+  /* ── screens: product bays on a lit ledge ── */
+  .rail-shots { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; align-items: start; }
+  .pbay { margin: 0; padding: 12px 12px 14px; }
+  .ledge { position: relative; border-radius: 14px; background: linear-gradient(180deg, var(--cream), #FBF0E8); box-shadow: var(--rim); padding: 10px 10px 0; overflow: hidden; aspect-ratio: 720 / 1558; }
+  .ledge img { width: 100%; height: auto; display: block; border-radius: 10px 10px 0 0; box-shadow: 0 10px 24px rgba(26,23,21,0.14); }
+  .ledge::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 16px; background: linear-gradient(to top, rgba(26,23,21,0.08), rgba(26,23,21,0)); }
+  .pbay figcaption { margin: 12px 4px 0; font-size: 13px; color: var(--quiet); font-weight: 500; }
+  .pbay figcaption b { color: var(--ink); display: block; font-size: 14.5px; }
+  .prov { display: inline-flex; align-items: center; gap: 6px; margin-top: 10px; font-family: var(--mono); font-size: 10.5px; letter-spacing: .08em; text-transform: uppercase; color: var(--celadon-deep); padding: 4px 8px; border-radius: var(--r-chip); background: var(--sage); border: 1px solid rgba(85,118,106,0.18); }
 
-  /* gallery */
-  .gallery { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; align-items: start; }
-  .shot { background: var(--porcelain); border: 1px solid rgba(23,23,21,0.06); border-radius: var(--r); padding: 12px 12px 14px; transition: transform 160ms ease; }
-  .shot:hover { transform: translateY(-3px); }
-  .shot img { width: 100%; height: auto; display: block; border-radius: 14px; }
-  .shot figcaption { margin: 12px 4px 0; font-size: 13px; color: var(--quiet); font-weight: 500; }
-  .shot figcaption b { color: var(--ink); display: block; font-size: 14px; }
+  /* receipt strip */
+  .receipt { display: grid; grid-template-columns: repeat(3, 1fr); margin-top: 22px; }
+  .receipt > div { padding: 26px 28px; }
+  .receipt > div + div { border-left: 1px solid var(--hair); }
+  .receipt .num { font-family: var(--mono); font-variant-numeric: tabular-nums; font-size: 40px; line-height: 1; letter-spacing: -.02em; margin-bottom: 12px; }
+  .receipt h3 { margin: 0 0 6px; font-size: 17px; } .receipt p { margin: 0; font-size: 14px; color: var(--quiet); }
 
-  /* honesty */
-  .honest { background: var(--plum); color: #F7F1E8; border-radius: 28px; padding: 40px 36px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; margin-top: 56px; }
-  .honest h3 { margin: 0 0 8px; font-size: 18px; color: #fff; } .honest p { margin: 0; font-size: 14.5px; color: rgba(247,241,232,0.78); }
-  .honest .num { font-family: var(--serif); font-size: 40px; line-height: 1; color: var(--pink); margin-bottom: 10px; }
+  /* ── pricing ── */
+  .plans { display: grid; grid-template-columns: 1.1fr .9fr; gap: 18px; align-items: stretch; }
+  .plan { position: relative; padding: 26px 26px 24px; display: flex; flex-direction: column; }
+  .plan .name { font-size: 12px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--quiet); }
+  .plan .amt { font-family: var(--mono); font-variant-numeric: tabular-nums; font-size: 44px; letter-spacing: -.02em; line-height: 1; margin: 12px 0 6px; }
+  .plan .amt small { font-family: var(--sans); font-size: 15px; color: var(--quiet); font-weight: 500; letter-spacing: 0; margin-left: 4px; }
+  .plan .trial { display: inline-block; align-self: flex-start; margin-top: 10px; padding: 5px 10px; border-radius: var(--r-chip); background: var(--pink-glow); color: var(--pink-text); font-size: 12.5px; font-weight: 700; }
+  .plan .meta { margin: 14px 0 0; font-size: 13.5px; color: var(--quiet); }
+  .seal-pro { position: absolute; top: 18px; right: 18px; font-family: var(--mono); font-size: 11px; letter-spacing: .14em; padding: 5px 10px; border-radius: 999px; color: var(--gold-text);
+    background: linear-gradient(var(--porcelain), var(--porcelain)) padding-box, var(--foil) border-box; border: 1.5px solid transparent; }
+  .includes { margin-top: 18px; padding-top: 16px; border-top: 1px solid var(--hair); font-size: 14px; color: var(--quiet); }
+  .includes b { color: var(--ink); }
+  .price-cta { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 18px; margin-top: 22px; }
+  .price { color: var(--quiet); font-size: 14px; margin: 0; }
 
   /* faq */
-  .faq { max-width: 760px; }
-  details { border-bottom: 1px solid rgba(23,23,21,0.08); padding: 6px 0; }
-  summary { cursor: pointer; list-style: none; font-weight: 700; font-size: 16px; padding: 14px 0; display: flex; justify-content: space-between; align-items: center; gap: 16px; }
+  .faq { max-width: 820px; padding: 6px 28px; }
+  details { border-bottom: 1px solid var(--hair); } details:last-of-type { border-bottom: 0; }
+  summary { cursor: pointer; list-style: none; font-weight: 700; font-size: 16.5px; padding: 16px 0; display: flex; justify-content: space-between; align-items: center; gap: 16px; min-height: 44px; }
   summary::-webkit-details-marker { display: none; }
-  summary::after { content: "+"; font-family: var(--mono); color: var(--pink); font-size: 22px; line-height: 1; }
+  summary::after { content: "+"; font-family: var(--mono); color: var(--pink-text); font-size: 20px; line-height: 1; flex: none; width: 28px; height: 28px; display: grid; place-items: center; border-radius: 50%; background: var(--pink-glow); }
   details[open] summary::after { content: "–"; }
-  details p { margin: 0 0 16px; color: var(--quiet); font-size: 15px; }
+  details p { margin: 0 0 18px; color: var(--quiet); font-size: 15px; max-width: 72ch; }
 
-  .final { text-align: center; padding: 76px 0 24px; }
-  .price { color: var(--quiet); font-size: 14px; margin-top: 16px; }
-  footer { text-align: center; padding: 48px 24px 96px; color: var(--quiet); font-size: 13px; }
-  footer a { color: var(--pink-text); text-decoration: none; margin: 0 10px; font-weight: 600; display: inline-block; padding: 8px 6px; } footer a:hover { text-decoration: underline; }
+  /* final */
+  .final { text-align: center; padding: 84px 0 24px; }
+  .final .card { padding: 44px 32px 40px; max-width: 760px; margin: 0 auto; }
+  .cheer { display: inline-flex; flex-direction: column; align-items: center; gap: 10px; margin-bottom: 18px; }
+  .cheer img { width: 96px; height: 96px; }
+  .cheer .bubble::before { left: 50%; top: -6px; transform: translateX(-50%) rotate(135deg); }
+  .final .price { margin-top: 16px; }
   .seal { margin-top: 22px; font-family: var(--kr); color: var(--pink-text); font-weight: 700; letter-spacing: 12px; font-size: 13px; }
+  footer { text-align: center; padding: 48px 24px 96px; color: var(--quiet); font-size: 13px; }
+  footer a { color: var(--pink-text); text-decoration: none; margin: 0 6px; font-weight: 600; display: inline-block; padding: 12px 8px; } footer a:hover { text-decoration: underline; }
 
   /* mobile sticky CTA */
   .sticky { display: none; }
 
-  /* reveal on scroll (CSS-only fallback: visible) */
-  /* reveal-on-scroll is opt-in: only when JS is present (html.js). No JS, crawlers, or a failed script → everything visible. */
-  html.js .reveal { opacity: 0; transform: translateY(14px); transition: opacity .6s ease, transform .6s ease; }
-  html.js .reveal.in { opacity: 1; transform: none; }
+  /* ── entrances: one-shot, 220 ms ease-out, 10 px — only when JS is present; no JS / crawlers see everything ── */
+  html.js .rise { opacity: 0; transform: translateY(10px); transition: opacity 220ms ease-out, transform 220ms ease-out; transition-delay: var(--d, 0ms); }
+  html.js .rise.in { opacity: 1; transform: none; }
 
   @media (max-width: 960px) {
-    .hero { grid-template-columns: 1fr; gap: 36px; padding-top: 40px; text-align: center; }
-    .truth, .promise { margin-left: auto; margin-right: auto; } .ctas { justify-content: center; } .proof { text-align: left; max-width: 560px; margin-left: auto; margin-right: auto; }
-    .scan-grid { grid-template-columns: 1fr; padding: 36px 26px; }
-    .steps, .pillars { grid-template-columns: 1fr 1fr; } .gallery { grid-template-columns: 1fr 1fr; }
-    .honest { grid-template-columns: 1fr; padding: 32px 26px; } nav.links { display: none; }
+    .bench { grid-template-columns: 1fr; gap: 32px; padding: 30px 26px; }
+    .read-grid, .plans, .receipt { grid-template-columns: 1fr; }
+    .receipt > div + div { border-left: 0; border-top: 1px solid var(--hair); }
+    .steps, .pillars { grid-template-columns: 1fr 1fr; } .rail-shots { grid-template-columns: 1fr 1fr; }
+    nav.links { display: none; }
   }
   @media (max-width: 600px) {
-    .steps, .pillars { grid-template-columns: 1fr; } .wordmark .kr, .eyebrow .kr { display: none; }
-    .proof { grid-template-columns: 1fr 1fr; gap: 10px 14px; } .proof b { font-size: 18px; }
-    .ctas .btn { width: 100%; justify-content: center; } h1 { font-size: clamp(40px, 11.5vw, 48px); }
-    .scan-grid { padding: 28px 18px; } .pip { font-size: 11px; padding: 5px 8px; } .honest { padding: 28px 20px; }
-    .device { width: min(100%, 300px); } .metric { grid-template-columns: 120px 1fr 44px; }
+    .wrap { padding: 0 16px; }
+    .bench { padding: 24px 18px; }
+    .steps, .pillars { grid-template-columns: 1fr; }
+    .proof { grid-template-columns: 1fr 1fr; } .proof div:nth-child(3) { border-left: 0; padding-left: 0; }
+    .proof b { font-size: 22px; }
+    .ctas .btn { width: 100%; } h1 { font-size: clamp(38px, 11vw, 46px); }
+    .btn-pink { white-space: normal; text-align: center; padding-left: 16px; padding-right: 16px; line-height: 1.2; }
+    .mrow { grid-template-columns: 1fr; gap: 6px; } .mrow .word { justify-self: start; }
+    .faq { padding: 4px 18px; } .final .card { padding: 36px 20px 32px; }
     .sticky { display: flex; position: fixed; left: 12px; right: 12px; bottom: 12px; z-index: 30; justify-content: center; }
-    .sticky .btn { width: 100%; justify-content: center; }
-    /* Real-screens gallery on phones: one swipeable row of large screens instead of a 2-up grid whose
-       captions wrapped one word per line. Scroll-snap, no scrollbar, edge-to-edge bleed. */
-    .gallery { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; gap: 12px; margin: 0 -24px; padding: 4px 24px 10px;
-      -webkit-overflow-scrolling: touch; scrollbar-width: none; }
-    .gallery::-webkit-scrollbar { display: none; }
-    .shot { flex: 0 0 76%; scroll-snap-align: start; }
-    .shot figcaption { font-size: 14px; } .shot figcaption b { font-size: 15px; }
+    .sticky .btn { width: 100%; }
+    /* Real-screens rail on phones: one swipeable row of large screens — scroll-snap, no scrollbar, edge-to-edge bleed. */
+    .rail-shots { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; gap: 12px; margin: 0 -16px; padding: 4px 16px 12px; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+    .rail-shots::-webkit-scrollbar { display: none; }
+    .pbay { flex: 0 0 76%; scroll-snap-align: start; }
+    .pbay figcaption { font-size: 14px; } .pbay figcaption b { font-size: 15px; }
   }
   @media (prefers-reduced-motion: reduce) {
-    .tag, .pip, .scanline { animation: none; } .fill { animation: none; width: var(--w); }
-    html.js .reveal { opacity: 1; transform: none; transition: none; } .device { transform: none; }
+    html { scroll-behavior: auto; }
+    .corners, .lm, .sweep { animation: none; } .lm { opacity: 1; } .sweep { opacity: 0; }
+    .fill { transition: none; width: var(--w); }
+    html.js .rise { opacity: 1; transform: none; transition: none; }
+    .lift, .btn { transition: none; } .lift:hover, .btn:hover { transform: none; }
   }
 </style>
 <script type="application/ld+json">
@@ -260,9 +342,9 @@
 </head>
 <body>
 
-<header>
+<header class="top">
   <div class="wrap bar">
-    <a class="brand" href="/" aria-label="Jineo home">
+    <a class="lockup" href="/">
       <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
         <defs>
           <radialGradient id="body" cx="0.36" cy="0.28" r="0.82"><stop offset="0" stop-color="#F7DBCE"/><stop offset="0.55" stop-color="#EDA899"/><stop offset="1" stop-color="#C76D79"/></radialGradient>
@@ -278,68 +360,99 @@
         <path d="M 458 730 Q 512 758, 566 730" stroke="#3F1C2C" stroke-width="18" stroke-linecap="round" fill="none"/>
         <circle cx="318" cy="680" r="42" fill="#B85C7A" fill-opacity="0.30"/><circle cx="706" cy="680" r="42" fill="#B85C7A" fill-opacity="0.30"/>
       </svg>
-      <span class="wordmark">JINEO<span class="kr">진어</span></span>
+      <span class="word">JINEO<span class="tag" lang="ko"> · 진</span></span>
     </a>
     <nav class="links" aria-label="Sections">
-      <a href="#scan">The scan</a><a href="#how">How it works</a><a href="#see">Screens</a><a href="#faq">FAQ</a>
+      <a href="#scan">The scan</a><a href="#how">How it works</a><a href="#see">Screens</a><a href="#pricing">Pricing</a><a href="#faq">FAQ</a>
     </nav>
-    <a class="btn btn-pink" href="https://apps.apple.com/app/apple-store/id6762692530?pt=128096369&ct=website&mt=8" target="_blank" rel="noopener">Get the app</a>
+    <a class="btn btn-ink" href="https://apps.apple.com/app/apple-store/id6762692530?pt=128096369&ct=website&mt=8" target="_blank" rel="noopener">Get the app</a>
   </div>
 </header>
+
+<div class="band">
+<div class="wrap">
+  <section class="hero" aria-labelledby="h1">
+    <div class="card bench">
+      <div>
+        <div class="greet">
+          <img src="/assets/bok.png" width="240" height="240" alt="Bok, Jineo's peach mascot, smiling" loading="eager" decoding="async">
+          <p class="bubble" style="margin:0">Hi, I'm Bok<span class="kr" lang="ko">· 복</span>. Your first scan is free.</p>
+        </div>
+        <p class="kicker">10-second skin scan <span class="kr" lang="ko">10초 스캔</span></p>
+        <h1 id="h1">Korean skincare,<br>decoded.</h1>
+        <p class="promise">Buy less. Choose better. Build a routine that works.</p>
+        <p class="truth">One selfie reads your skin — Skin Type 16, 12-tone Personal Color, water–oil map, pores and marks by zone — then scores real Korean products honestly. Scan any label.</p>
+        <div class="ctas">
+          <a class="btn btn-pink" href="https://apps.apple.com/app/apple-store/id6762692530?pt=128096369&ct=website&mt=8" target="_blank" rel="noopener">Free first scan on iPhone →</a>
+          <a class="btn btn-ghost" href="#scan">Watch it read skin</a>
+        </div>
+        <p class="fine">Free first scan · Pro $5.99/wk or $59.99/yr · 7-day free trial on annual</p>
+        <div class="proof">
+          <div><b>~10s</b>one selfie, one read</div>
+          <div><b>16</b>Korean skin types</div>
+          <div><b>12</b>Personal Color tones</div>
+          <div><b>120+</b>real Korean brands</div>
+        </div>
+      </div>
+      <div class="bay" role="group" aria-label="The capture frame, as a still">
+        <div class="rail" aria-hidden="true">
+          <span class="ro"><i class="lamp"></i>Frame · ready</span>
+          <span class="ro"><i class="lamp"></i>Light · ok</span>
+          <span class="ro"><i class="lamp"></i>Level · ok</span>
+        </div>
+        <div class="frame">
+          <img src="/assets/scan-face.webp" width="580" height="855" alt="A selfie inside Jineo's capture frame: hairline corner brackets, an oval framing guide and landmark points on the forehead, nose and cheek" loading="eager" fetchpriority="high" decoding="async">
+          <div class="hud" aria-hidden="true">
+            <div class="corners"><span class="corner c-tl"></span><span class="corner c-tr"></span><span class="corner c-bl"></span><span class="corner c-br"></span></div>
+            <span class="guide"></span>
+            <span class="lm" style="left:38%;top:31%;--d:300ms"></span>
+            <span class="lm" style="left:85%;top:31%;--d:360ms"></span>
+            <span class="lm" style="left:62%;top:22%;--d:420ms"></span>
+            <span class="lm" style="left:24%;top:58%;--d:480ms"></span>
+            <span class="lm" style="left:92%;top:62%;--d:540ms"></span>
+            <span class="lm" style="left:70%;top:86%;--d:600ms"></span>
+            <div class="sweep"></div>
+          </div>
+        </div>
+        <div class="dock" aria-hidden="true"><span>Scan · about 10 seconds</span><span>Analyzed once · never stored</span></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="reads" role="group" aria-label="What the scan reads">
+    <span class="chip">Skin Type 16</span><span class="chip">12-tone Personal Color</span><span class="chip">Water–oil map</span><span class="chip">Pores · marks · redness by zone</span><span class="chip">Your gwang goal</span>
+  </div>
+</div>
+</div>
 
 <div class="wrap">
 <main>
 
-  <section class="hero" style="padding-top:44px">
-    <div>
-      <p class="eyebrow">10-second skin scan <span class="kr">한 · 뷰티</span></p>
-      <h1>Korean skincare,<br><em>decoded.</em></h1>
-      <p class="promise">Buy less. Choose better. Build a routine that works.</p>
-      <p class="truth">One selfie reads your skin — Skin Type 16, 12-tone Personal Color, water–oil map, pores and marks by zone — then scores real Korean products honestly. Scan any label.</p>
-      <div class="ctas">
-        <a class="btn btn-pink" href="https://apps.apple.com/app/apple-store/id6762692530?pt=128096369&ct=website&mt=8" target="_blank" rel="noopener">Free first scan on iPhone →</a>
-        <a class="btn btn-ghost" href="#scan">Watch it read skin</a>
-      </div>
-      <p class="fine">Free first scan · Pro $5.99/wk or $59.99/yr · 7-day free trial on annual</p>
-      <div class="proof">
-        <div><b>~10s</b>one selfie, one read</div>
-        <div><b>16</b>Korean skin types</div>
-        <div><b>12</b>Personal Color tones</div>
-        <div><b>120+</b>real Korean brands</div>
-      </div>
-    </div>
-    <div class="device-wrap">
-      <img class="device" src="/assets/hero-device.webp" width="876" height="1219" alt="Jineo skin scan on iPhone — zone scores for forehead, T-zone and cheeks, hydration level, and an honest 0–100 glass-skin score" loading="eager">
-      <span class="tag tag-a"><span class="dot"></span>Scan · about 10 seconds</span>
-      <span class="tag tag-b"><span class="dot"></span>Honest 0–100, no paid rankings</span>
-    </div>
-  </section>
-
-  <div class="reads" aria-label="What the scan reads">
-    <span class="chip">Skin Type 16</span><span class="chip">12-tone Personal Color</span><span class="chip">Water–oil map</span><span class="chip">Pores · marks · redness by zone</span><span class="chip">Your gwang goal</span>
-  </div>
-
   <!-- ── THE SCAN ── -->
-  <section id="scan" class="scan reveal">
-    <div class="scan-grid">
-      <div class="frame">
-        <img src="/assets/scan-face.webp" width="580" height="855" alt="Sample skin read — zone annotations over a face: forehead, T-zone, cheek, hydration" loading="lazy">
-        <div class="scanline"></div>
-        <span class="bracket bl-tl"></span><span class="bracket bl-tr"></span><span class="bracket bl-bl"></span><span class="bracket bl-br"></span>
-        <span class="pip p1"><i></i>FOREHEAD · 88</span>
-        <span class="pip p2"><i></i>T-ZONE · 90</span>
-        <span class="pip p3"><i></i>CHEEK · 92</span>
-        <span class="pip p4"><i></i>HYDRATED · 86%</span>
+  <section id="scan" aria-labelledby="h-scan">
+    <div class="head">
+      <p class="kicker">The scan <span class="kr" lang="ko">스캔 · 10초</span></p>
+      <h2 id="h-scan">Ten seconds.<br>Six reads. Zero guessing.</h2>
+      <p class="sub">A vision model reads cosmetic skin signals from one selfie — by facial zone, on Korean frameworks — and hands you a read you can act on.</p>
+    </div>
+    <div class="read-grid">
+      <div class="foil rise">
+        <div class="inner">
+          <p class="kicker">Your Korean Skin ID <span class="kr" lang="ko">스킨 타입 16</span></p>
+          <div class="code">ORPT</div>
+          <div class="kname" lang="ko">한국의 노을</div>
+          <div class="ename">Korean Sunset</div>
+          <div class="axes" role="group" aria-label="The four axes of this sample type"><span class="axis">Oily</span><span class="axis">Resistant</span><span class="axis">Pigment-prone</span><span class="axis">Tight</span></div>
+          <div class="stamp"><span>Your four letters, explained.</span><span class="ro"><i class="lamp"></i>Sample</span></div>
+        </div>
       </div>
-      <div>
-        <p class="eyebrow">The scan <span class="kr">스캔 · 10초</span></p>
-        <h2>Ten seconds.<br>Six reads. <em>Zero guessing.</em></h2>
-        <p class="sub">A vision model reads cosmetic skin signals from one selfie — by facial zone, on Korean frameworks — and hands you a number you can act on.</p>
-        <div class="metrics" aria-label="Sample read">
-          <div class="metric"><span>Hydration<span class="kr">수분</span></span><div class="track"><div class="fill" style="--w:86%"></div></div><b>86</b></div>
-          <div class="metric"><span>Barrier<span class="kr">장벽</span></span><div class="track"><div class="fill" style="--w:78%"></div></div><b>78</b></div>
-          <div class="metric"><span>Glow<span class="kr">광</span></span><div class="track"><div class="fill" style="--w:92%"></div></div><b>92</b></div>
-          <div class="metric"><span>Pores<span class="kr">모공</span></span><div class="track"><div class="fill" style="--w:71%"></div></div><b>71</b></div>
+      <div class="card readout rise" style="--d:60ms">
+        <p class="kicker">Sample read <span class="kr" lang="ko">수분 · 장벽 · 광 · 모공</span></p>
+        <div class="meters" role="group" aria-label="Sample read, as bands">
+          <div class="mrow"><span>Hydration<span class="kr" lang="ko">수분</span></span><div class="track" aria-hidden="true"><div class="fill" style="--w:84%"></div></div><span class="word fine">Fine</span></div>
+          <div class="mrow"><span>Barrier<span class="kr" lang="ko">장벽</span></span><div class="track" aria-hidden="true"><div class="fill" style="--w:52%"></div></div><span class="word watch">Watch</span></div>
+          <div class="mrow"><span>Glow<span class="kr" lang="ko">광</span></span><div class="track" aria-hidden="true"><div class="fill" style="--w:88%"></div></div><span class="word fine">Fine</span></div>
+          <div class="mrow"><span>Pores<span class="kr" lang="ko">모공</span></span><div class="track" aria-hidden="true"><div class="fill" style="--w:46%"></div></div><span class="word watch">Watch</span></div>
         </div>
         <p class="note">Sample read from the App Store listing. Cosmetic signals only — not a diagnosis. Your selfie is analyzed once and never stored.</p>
       </div>
@@ -347,56 +460,93 @@
   </section>
 
   <!-- ── HOW IT WORKS ── -->
-  <section id="how">
-    <p class="eyebrow">How it works</p>
-    <h2>Scan. Read. <em>Choose.</em></h2>
-    <p class="sub">Three steps between “what is my skin” and “what should I actually buy.”</p>
+  <section id="how" aria-labelledby="h-how">
+    <div class="head">
+      <p class="kicker">How it works</p>
+      <h2 id="h-how">Scan. Read. Choose.</h2>
+      <p class="sub">Three steps between “what is my skin” and “what should I actually buy.”</p>
+    </div>
     <div class="steps">
-      <div class="step reveal"><div class="n">1</div><h3>Scan</h3><p>One selfie, about ten seconds. Explicit consent every time, never identified, never stored on our servers.</p></div>
-      <div class="step reveal"><div class="n">2</div><h3>Read</h3><p>Your Skin Type 16, 12-tone Personal Color, water–oil axes and zone-by-zone signals — on the frameworks Korean skincare actually uses.</p></div>
-      <div class="step reveal"><div class="n">3</div><h3>Choose</h3><p>Real Korean products scored 0–100 against <em>your</em> read. Point the camera at any label and see what fits. Ask Hana anything.</p></div>
+      <div class="card lift step rise"><div class="n">01</div><div class="sym" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 9V6a2 2 0 0 1 2-2h3M15 4h3a2 2 0 0 1 2 2v3M20 15v3a2 2 0 0 1-2 2h-3M9 20H6a2 2 0 0 1-2-2v-3"/><path d="M7 12h10"/></svg></div><h3>Scan</h3><p>One selfie, about ten seconds. Explicit consent every time, never identified, never stored on our servers.</p></div>
+      <div class="card lift step rise" style="--d:60ms"><div class="n">02</div><div class="sym" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M9 10.2h.01M15 10.2h.01"/><path d="M9.3 14.4c1.6 1.3 3.8 1.3 5.4 0"/></svg></div><h3>Read</h3><p>Your Skin Type 16, 12-tone Personal Color, water–oil axes and zone-by-zone signals — on the frameworks Korean skincare actually uses.</p></div>
+      <div class="card lift step rise" style="--d:120ms"><div class="n">03</div><div class="sym" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="5"/><path d="M8.5 12.2l2.4 2.4 4.8-5"/></svg></div><h3>Choose</h3><p>Real Korean products scored 0–100 against <em>your</em> read. Point the camera at any label and see what fits. Ask Hana anything.</p></div>
     </div>
   </section>
 
   <!-- ── PILLARS ── -->
-  <section>
-    <p class="eyebrow">What Jineo does</p>
-    <h2>Korean beauty standards, read against <em>your</em> skin.</h2>
-    <p class="sub">Then applied to the products on the shelf in front of you.</p>
+  <section aria-labelledby="h-does">
+    <div class="head">
+      <p class="kicker">What Jineo does</p>
+      <h2 id="h-does">Korean beauty standards, read against your skin.</h2>
+      <p class="sub">Then applied to the products on the shelf in front of you.</p>
+    </div>
     <div class="pillars">
-      <div class="pillar reveal"><span class="han">스킨 타입 16 · 진단</span><h3>Your Korean Skin ID</h3><p>One selfie → a 4-letter Skin Type 16 read, independent water and oil axes, and the gwang glow your skin can actually chase.</p></div>
-      <div class="pillar reveal"><span class="han">개인 컬러 · 12 톤</span><h3>Personal Color salon</h3><p>A salon-style 12-tone read — Spring / Summer / Autumn / Winter × Light / Bright / True / Mute / Deep — from the same selfie.</p></div>
-      <div class="pillar reveal"><span class="han">성분 스캔 · 라벨</span><h3>Scan any label</h3><p>Point the camera at an ingredient list. Each ingredient is graded against your profile — what matches your barrier today, and what doesn’t.</p></div>
-      <div class="pillar reveal"><span class="han">정직한 점수 · 0–100</span><h3>Honest scores, real brands</h3><p>120+ real Korean products — Beauty of Joseon, Anua, Cosrx, Sulwhasoo — scored 0–100 against your scan. Nobody can pay for a better number.</p></div>
-      <div class="pillar reveal"><span class="han">하나 · 코치</span><h3>Hana, your K-beauty coach</h3><p>Korean editorial standards and Hanbang tradition in chat: layering questions, first-serum picks, glass-skin plans — and a roast of the routine you paste in.</p></div>
-      <div class="pillar reveal"><span class="han">복 · 글로우 무비</span><h3>Bok, and your Glow Movie</h3><p>복 means luck. Your peach sidekick marks each ritual, keeps the streak honest, and turns your skin journey into a 6-second reel worth sending.</p></div>
+      <div class="card lift pillar rise"><div class="sym" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="3"/><circle cx="8.5" cy="11" r="2"/><path d="M13 9.5h5M13 13h4M6 16.5h5"/></svg></div><p class="kicker">Skin ID <span class="kr" lang="ko">스킨 타입 16</span></p><h3>Your Korean Skin ID</h3><p>One selfie → a 4-letter Skin Type 16 read, independent water and oil axes, and the gwang glow your skin can actually chase.</p></div>
+      <div class="card lift pillar rise" style="--d:60ms"><div class="sym" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M12 4v16M4 12h16M6.3 6.3l11.4 11.4M17.7 6.3L6.3 17.7"/></svg></div><p class="kicker">Personal Color <span class="kr" lang="ko">개인 컬러 · 12 톤</span></p><h3>Personal Color salon</h3><p>A salon-style 12-tone read — Spring / Summer / Autumn / Winter × Light / Bright / True / Mute / Deep — from the same selfie.</p></div>
+      <div class="card lift pillar rise" style="--d:120ms"><div class="sym" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="M7 9v6M10 9v6M13 9v6M16 9v6"/></svg></div><p class="kicker">Label scan <span class="kr" lang="ko">성분 스캔 · 라벨</span></p><h3>Scan any label</h3><p>Point the camera at an ingredient list. Each ingredient is graded against your profile — what matches your barrier today, and what doesn’t.</p></div>
+      <div class="card lift pillar rise"><div class="sym" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 18h16"/><path d="M6.5 18v-4M11 18v-7M15.5 18v-5M20 18v-9"/></svg></div><p class="kicker">Honest scores <span class="kr" lang="ko">정직한 점수</span></p><h3>Honest scores, real brands</h3><p>120+ real Korean products — Beauty of Joseon, Anua, Cosrx, Sulwhasoo — scored 0–100 against your scan. Nobody can pay for a better number.</p></div>
+      <div class="card lift pillar rise" style="--d:60ms"><div class="sym" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 7a3 3 0 0 1 3-3h10a3 3 0 0 1 3 3v6a3 3 0 0 1-3 3h-6l-4 3.2V16H7a3 3 0 0 1-3-3z"/></svg></div><p class="kicker">Hana <span class="kr" lang="ko">하나 · 코치</span></p><h3>Hana, your K-beauty coach</h3><p>Korean editorial standards and Hanbang tradition in chat: layering questions, first-serum picks, glass-skin plans — and a roast of the routine you paste in.</p></div>
+      <div class="card lift pillar rise" style="--d:120ms"><div class="sym" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M10.2 9.2v5.6l4.6-2.8z"/></svg></div><p class="kicker">Glow Movie <span class="kr" lang="ko">복 · 글로우 무비</span></p><h3>Bok, and your Glow Movie</h3><p>복 means luck. Your peach sidekick marks each ritual, keeps the streak honest, and turns your skin journey into a 6-second reel worth sending.</p></div>
     </div>
   </section>
 
   <!-- ── SCREENS ── -->
-  <section id="see">
-    <p class="eyebrow">Real screens</p>
-    <h2>See it, not a mock-up.</h2>
-    <p class="sub">Straight from the app on the App Store today.</p>
-    <div class="gallery">
-      <figure class="shot reveal"><img src="/assets/shot-product.webp" width="720" height="961" alt="A Korean product scored against your skin profile" loading="lazy"><figcaption><b>Product, scored</b>Against your scan, not a paid ranking.</figcaption></figure>
-      <figure class="shot reveal"><img src="/assets/shot-skintype.webp" width="720" height="1558" alt="Skin Type 16 result screen" loading="lazy"><figcaption><b>Skin Type 16</b>Your four letters, explained.</figcaption></figure>
-      <figure class="shot reveal"><img src="/assets/shot-hana.webp" width="720" height="1558" alt="Hana coach chat screen" loading="lazy"><figcaption><b>Hana</b>Ask about layering, in plain language.</figcaption></figure>
-      <figure class="shot reveal"><img src="/assets/shot-glow.webp" width="720" height="1558" alt="Glow Movie progress arc screen" loading="lazy"><figcaption><b>Glow Movie</b>Your journey, as a 6-second reel.</figcaption></figure>
+  <section id="see" aria-labelledby="h-see">
+    <div class="head">
+      <p class="kicker">Real screens</p>
+      <h2 id="h-see">See it, not a mock-up.</h2>
+      <p class="sub">Straight from the app on the App Store today.</p>
+    </div>
+    <div class="rail-shots">
+      <figure class="card lift pbay rise"><div class="ledge"><img src="/assets/shot-product.webp" width="720" height="961" alt="A Korean product scored against your skin profile" loading="lazy" decoding="async"></div><figcaption><b>Product, scored</b>Against your scan, not a paid ranking.<br><span class="prov">Real screen</span></figcaption></figure>
+      <figure class="card lift pbay rise" style="--d:60ms"><div class="ledge"><img src="/assets/shot-skintype.webp" width="720" height="1558" alt="Skin Type 16 result screen" loading="lazy" decoding="async"></div><figcaption><b>Skin Type 16</b>Your four letters, explained.<br><span class="prov">Real screen</span></figcaption></figure>
+      <figure class="card lift pbay rise" style="--d:120ms"><div class="ledge"><img src="/assets/shot-hana.webp" width="720" height="1558" alt="Hana coach chat screen" loading="lazy" decoding="async"></div><figcaption><b>Hana</b>Ask about layering, in plain language.<br><span class="prov">Real screen</span></figcaption></figure>
+      <figure class="card lift pbay rise" style="--d:180ms"><div class="ledge"><img src="/assets/shot-glow.webp" width="720" height="1558" alt="Glow Movie progress arc screen" loading="lazy" decoding="async"></div><figcaption><b>Glow Movie</b>Your journey, as a 6-second reel.<br><span class="prov">Real screen</span></figcaption></figure>
     </div>
 
-    <div class="honest reveal">
+    <div class="card receipt rise">
       <div><div class="num">0</div><h3>Paid placements</h3><p>No sponsored rankings, no brand can buy a score. Product links may earn us a commission — commissions never touch scores.</p></div>
       <div><div class="num">1×</div><h3>Your selfie is analyzed once</h3><p>Explicit consent before every scan. Never identified, never stored on our servers, never sold. No “looks score,” ever.</p></div>
       <div><div class="num">~10s</div><h3>Cosmetic signals, not a diagnosis</h3><p>Jineo reads skin signals and suggests cosmetic routines. It isn’t a medical device and doesn’t diagnose or treat anything.</p></div>
     </div>
   </section>
 
+  <!-- ── PRICING ── -->
+  <section id="pricing" aria-labelledby="h-price">
+    <div class="head">
+      <p class="kicker">Pricing <span class="kr" lang="ko">프로</span></p>
+      <h2 id="h-price">The first scan is free.</h2>
+      <p class="sub">Jineo Pro — re-scans, the Hana coach, Routine Roast, cycle tuning — is $5.99/week or $59.99/year with a 7-day free trial on annual. Managed through your Apple ID; cancel anytime.</p>
+    </div>
+    <div class="plans">
+      <div class="card plan rise">
+        <span class="seal-pro">PRO</span>
+        <div class="name">Jineo Pro — annual</div>
+        <div class="amt">$59.99<small>/year</small></div>
+        <span class="trial">7-day free trial on annual</span>
+        <p class="meta">Managed through your Apple ID; cancel anytime.</p>
+        <div class="includes"><b>Pro includes</b> re-scans, the Hana coach, Routine Roast, cycle tuning.</div>
+      </div>
+      <div class="card plan rise" style="--d:60ms">
+        <div class="name">Jineo Pro — weekly</div>
+        <div class="amt">$5.99<small>/week</small></div>
+        <p class="meta">Managed through your Apple ID; cancel anytime.</p>
+        <div class="includes"><b>Free first scan</b> — Pro $5.99/wk or $59.99/yr.</div>
+      </div>
+    </div>
+    <div class="price-cta">
+      <a class="btn btn-pink" href="https://apps.apple.com/app/apple-store/id6762692530?pt=128096369&ct=website&mt=8" target="_blank" rel="noopener">Free first scan on iPhone →</a>
+      <p class="price">Pro $5.99/week or $59.99/year · 7-day free trial on annual · cancel anytime</p>
+    </div>
+  </section>
+
   <!-- ── FAQ ── -->
-  <section id="faq">
-    <p class="eyebrow">Questions</p>
-    <h2>The honest FAQ.</h2>
-    <div class="faq">
+  <section id="faq" aria-labelledby="h-faq">
+    <div class="head">
+      <p class="kicker">Questions <span class="kr" lang="ko">자주 묻는 질문</span></p>
+      <h2 id="h-faq">The honest FAQ.</h2>
+    </div>
+    <div class="card faq rise">
       <details><summary>How does the skin scan work?</summary><p>You take one selfie. It’s analyzed once by an AI vision model to read cosmetic skin signals — hydration and oil balance, pore zones, marks and redness by facial zone, and tone for Personal Color. Your selfie is never stored on our servers.</p></details>
       <details><summary>What is Skin Type 16?</summary><p>Our Korean-named skin identity system, built on the dermatologist-developed Baumann framework used in Korean skincare research. Four axes — Dry/Oily · Sensitive/Resistant · Pigment-prone/Non-pigmented · Wrinkle-prone/Tight — give you a 4-letter type and its Korean name.</p></details>
       <details><summary>Are the scores sponsored or paid by brands?</summary><p>No. Zero paid rankings, zero sponsored scores. No brand can pay for placement or a better number, anywhere in the app. Product links may earn us an affiliate commission at no extra cost to you — commissions never touch scores.</p></details>
@@ -407,27 +557,37 @@
     <p class="sub" style="margin-top:18px"><a href="/faq.html">All questions →</a></p>
   </section>
 
-  <section class="final">
-    <h2>Stop guessing. <em>Scan.</em></h2>
-    <a class="btn btn-pink" href="https://apps.apple.com/app/apple-store/id6762692530?pt=128096369&ct=website&mt=8" target="_blank" rel="noopener">Download Jineo — free first scan →</a>
-    <p class="price">Pro $5.99/week or $59.99/year · 7-day free trial on annual · cancel anytime</p>
-    <div class="seal">진</div>
-  </section>
-
 </main>
+</div>
+
+<div class="band final-band">
+<div class="wrap">
+  <section class="final" aria-labelledby="h-final">
+    <div class="card">
+      <div class="cheer">
+        <img src="/assets/bok.png" width="240" height="240" alt="Bok, Jineo's peach mascot, cheering you on" loading="lazy" decoding="async">
+        <p class="bubble" style="margin:0">Ready when you are.</p>
+      </div>
+      <h2 id="h-final">Stop guessing. Scan.</h2>
+      <a class="btn btn-pink" href="https://apps.apple.com/app/apple-store/id6762692530?pt=128096369&ct=website&mt=8" target="_blank" rel="noopener">Download Jineo — free first scan →</a>
+      <p class="price">Pro $5.99/week or $59.99/year · 7-day free trial on annual · cancel anytime</p>
+      <div class="seal" lang="ko">진</div>
+    </div>
+  </section>
+</div>
 </div>
 
 <footer>
   <a href="/privacy.html">Privacy Policy</a><a href="/terms.html">Terms of Service</a><a href="/support.html">Support</a><a href="/press.html">Press</a><a href="/faq.html">FAQ</a>
-  <div style="margin-top:16px; font-size:12px; opacity:0.72;">© 2026 Universal AI LLC</div>
+  <div style="margin-top:16px; font-size:12px;">© 2026 Universal AI LLC</div>
 </footer>
 
 <div class="sticky"><a class="btn btn-pink" href="https://apps.apple.com/app/apple-store/id6762692530?pt=128096369&ct=website&mt=8" target="_blank" rel="noopener">Free first scan on iPhone →</a></div>
 
 <script>
-  // reveal-on-scroll; harmless without JS (elements stay visible via reduced-motion or if IO is missing)
+  // One-shot staggered entrances. Harmless without JS: html.js gates the hidden state, so crawlers and no-JS see everything.
   (function () {
-    var els = document.querySelectorAll('.reveal');
+    var els = document.querySelectorAll('.rise');
     if (!('IntersectionObserver' in window)) { els.forEach(function (e) { e.classList.add('in'); }); return; }
     var io = new IntersectionObserver(function (entries) {
       entries.forEach(function (en) { if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); } });
