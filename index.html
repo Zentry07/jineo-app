@@ -3,18 +3,18 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Jineo — Korean skincare, decoded. A 10-second skin scan for iPhone</title>
+<title>Jineo — Korean skincare, decoded. Skin + shelf scan for iPhone</title>
 <link rel="canonical" href="https://jineo.app/">
-<meta name="description" content="One selfie → Skin Type 16, 12-tone Personal Color and honest 0–100 scores on real Korean products. Scan any label. No paid rankings. Free first scan on iPhone.">
+<meta name="description" content="Korean skincare, decoded. Scan your skin + the products you own → an AM/PM routine that fits. Skin Type 16, 12-tone Personal Color, real Korean brands. No paid rankings. On iPhone.">
 <meta property="og:title" content="Jineo — Korean skincare, decoded.">
-<meta property="og:description" content="A 10-second skin scan, honest 0–100 scores, and a K-beauty coach — real Korean brands only. Free first scan on iPhone.">
+<meta property="og:description" content="Scan your skin + the products you own → an AM/PM routine that fits. Real Korean brands. No paid rankings. On iPhone.">
 <meta property="og:image" content="https://jineo.app/assets/og.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:url" content="https://jineo.app/">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Jineo — Korean skincare, decoded.">
-<meta name="twitter:description" content="A 10-second skin scan, honest 0–100 scores, and a K-beauty coach — real Korean brands only. Free first scan on iPhone.">
+<meta name="twitter:description" content="Scan your skin + the products you own → an AM/PM routine that fits. Real Korean brands. No paid rankings. On iPhone.">
 <meta name="twitter:image" content="https://jineo.app/assets/og.png">
 <meta name="theme-color" content="#FFFCFA">
 <script>document.documentElement.classList.add("js")</script>
@@ -152,6 +152,7 @@
   .fill { height: 100%; border-radius: 999px; background: linear-gradient(90deg, var(--pink), #FFB1C8); width: 0; animation: grow 1.6s cubic-bezier(.2,.8,.2,1) forwards; }
   @keyframes grow { to { width: var(--w) } }
   .metric b { font-family: var(--mono); text-align: right; }
+  .metric.read { grid-template-columns: 190px 1fr; } .metric.read p { margin: 0; color: rgba(247,241,232,0.72); }
   .scan .note { font-size: 12px; color: rgba(247,241,232,0.5); margin-top: 18px; }
 
   /* how it works */
@@ -216,7 +217,7 @@
     .proof { grid-template-columns: 1fr 1fr; gap: 10px 14px; } .proof b { font-size: 18px; }
     .ctas .btn { width: 100%; justify-content: center; } h1 { font-size: clamp(40px, 11.5vw, 48px); }
     .scan-grid { padding: 28px 18px; } .pip { font-size: 11px; padding: 5px 8px; } .honest { padding: 28px 20px; }
-    .device { width: min(100%, 300px); } .metric { grid-template-columns: 120px 1fr 44px; }
+    .device { width: min(100%, 300px); } .metric { grid-template-columns: 120px 1fr 44px; } .metric.read { grid-template-columns: 1fr; gap: 2px; }
     .sticky { display: flex; position: fixed; left: 12px; right: 12px; bottom: 12px; z-index: 30; justify-content: center; }
     .sticky .btn { width: 100%; justify-content: center; }
     /* Real-screens gallery on phones: one swipeable row of large screens instead of a 2-up grid whose
@@ -246,7 +247,7 @@
     "name": "Universal AI LLC",
     "url": "https://universalaillc.com"
   },
-  "description": "One selfie → Skin Type 16, 12-tone Personal Color and honest 0–100 scores on real Korean products. Scan any label. No paid rankings. Free first scan on iPhone.",
+  "description": "Korean skincare, decoded. Scan your skin + the products you own → an AM/PM routine that fits. Skin Type 16, 12-tone Personal Color, real Korean brands. No paid rankings. On iPhone.",
   "offers": [
     {
       "@type": "Offer",
@@ -298,26 +299,26 @@
 
   <section class="hero" style="padding-top:44px">
     <div>
-      <p class="eyebrow">10-second skin scan <span class="kr">한 · 뷰티</span></p>
+      <p class="eyebrow">Skin + shelf scan <span class="kr">한 · 뷰티</span></p>
       <h1>Korean skincare,<br><em>decoded.</em></h1>
       <p class="promise">Buy less. Choose better. Build a routine that works.</p>
-      <p class="truth">One selfie reads your skin — Skin Type 16, 12-tone Personal Color, water–oil map, pores and marks by zone — then scores real Korean products honestly. Scan any label.</p>
+      <p class="truth">One selfie reads your skin — Skin Type 16, 12-tone Personal Color, water–oil map, pores and marks by zone. Then scan the products you own and Jineo builds your AM/PM routine around them, with a Korean swap for anything that fights your skin.</p>
       <div class="ctas">
-        <a class="btn btn-pink" href="https://apps.apple.com/app/apple-store/id6762692530?pt=128096369&ct=website&mt=8" target="_blank" rel="noopener">Free first scan on iPhone →</a>
+        <a class="btn btn-pink" href="https://apps.apple.com/app/apple-store/id6762692530?pt=128096369&ct=website&mt=8" target="_blank" rel="noopener">Get it on iPhone →</a>
         <a class="btn btn-ghost" href="#scan">Watch it read skin</a>
       </div>
-      <p class="fine">Free first scan · Pro $5.99/wk or $59.99/yr · 7-day free trial on annual</p>
+      <p class="fine">Pro $5.99/wk or $59.99/yr · 7-day free trial on annual</p>
       <div class="proof">
-        <div><b>~10s</b>one selfie, one read</div>
+        <div><b>1</b>selfie, one read</div>
         <div><b>16</b>Korean skin types</div>
         <div><b>12</b>Personal Color tones</div>
         <div><b>120+</b>real Korean brands</div>
       </div>
     </div>
     <div class="device-wrap">
-      <img class="device" src="/assets/hero-device.webp" width="876" height="1219" alt="Jineo skin scan on iPhone — zone scores for forehead, T-zone and cheeks, hydration level, and an honest 0–100 glass-skin score" loading="eager">
-      <span class="tag tag-a"><span class="dot"></span>Scan · about 10 seconds</span>
-      <span class="tag tag-b"><span class="dot"></span>Honest 0–100, no paid rankings</span>
+      <img class="device" src="/assets/hero-device.webp" width="876" height="1219" alt="Jineo skin scan on iPhone — zone map for forehead, T-zone and cheeks, and hydration level" loading="eager">
+      <span class="tag tag-a"><span class="dot"></span>One selfie · read by zone</span>
+      <span class="tag tag-b"><span class="dot"></span>Real Korean brands · no paid rankings</span>
     </div>
   </section>
 
@@ -332,22 +333,24 @@
         <img src="/assets/scan-face.webp" width="580" height="855" alt="Sample skin read — zone annotations over a face: forehead, T-zone, cheek, hydration" loading="lazy">
         <div class="scanline"></div>
         <span class="bracket bl-tl"></span><span class="bracket bl-tr"></span><span class="bracket bl-bl"></span><span class="bracket bl-br"></span>
-        <span class="pip p1"><i></i>FOREHEAD · 88</span>
-        <span class="pip p2"><i></i>T-ZONE · 90</span>
-        <span class="pip p3"><i></i>CHEEK · 92</span>
-        <span class="pip p4"><i></i>HYDRATED · 86%</span>
+        <span class="pip p1"><i></i>FOREHEAD</span>
+        <span class="pip p2"><i></i>T-ZONE</span>
+        <span class="pip p3"><i></i>CHEEK</span>
+        <span class="pip p4"><i></i>HYDRATION</span>
       </div>
       <div>
-        <p class="eyebrow">The scan <span class="kr">스캔 · 10초</span></p>
-        <h2>Ten seconds.<br>Six reads. <em>Zero guessing.</em></h2>
-        <p class="sub">A vision model reads cosmetic skin signals from one selfie — by facial zone, on Korean frameworks — and hands you a number you can act on.</p>
-        <div class="metrics" aria-label="Sample read">
-          <div class="metric"><span>Hydration<span class="kr">수분</span></span><div class="track"><div class="fill" style="--w:86%"></div></div><b>86</b></div>
-          <div class="metric"><span>Barrier<span class="kr">장벽</span></span><div class="track"><div class="fill" style="--w:78%"></div></div><b>78</b></div>
-          <div class="metric"><span>Glow<span class="kr">광</span></span><div class="track"><div class="fill" style="--w:92%"></div></div><b>92</b></div>
-          <div class="metric"><span>Pores<span class="kr">모공</span></span><div class="track"><div class="fill" style="--w:71%"></div></div><b>71</b></div>
+        <p class="eyebrow">The scan <span class="kr">스캔</span></p>
+        <h2>One selfie.<br>Six reads. <em>Zero guessing.</em></h2>
+        <p class="sub">A vision model reads cosmetic skin signals from one selfie — by facial zone, on Korean frameworks — and hands you a read you can act on.</p>
+        <div class="metrics" aria-label="The six reads">
+          <div class="metric read"><span>Skin Type 16<span class="kr">피부 타입</span></span><p>Your 4-letter Korean skin ID</p></div>
+          <div class="metric read"><span>Personal Color<span class="kr">퍼스널 컬러</span></span><p>Your season, out of 12 tones</p></div>
+          <div class="metric read"><span>Water–oil<span class="kr">수분 · 유분</span></span><p>Two separate axes, not one label</p></div>
+          <div class="metric read"><span>Pores<span class="kr">모공</span></span><p>Mapped by facial zone</p></div>
+          <div class="metric read"><span>Marks<span class="kr">잡티</span></span><p>Mapped by facial zone</p></div>
+          <div class="metric read"><span>Redness<span class="kr">홍조</span></span><p>Mapped by facial zone</p></div>
         </div>
-        <p class="note">Sample read from the App Store listing. Cosmetic signals only — not a diagnosis. Your selfie is analyzed once and never stored.</p>
+        <p class="note">Cosmetic signals only — not a diagnosis. Your selfie is analyzed once and never stored.</p>
       </div>
     </div>
   </section>
@@ -358,9 +361,9 @@
     <h2>Scan. Read. <em>Choose.</em></h2>
     <p class="sub">Three steps between “what is my skin” and “what should I actually buy.”</p>
     <div class="steps">
-      <div class="step reveal"><div class="n">1</div><h3>Scan</h3><p>One selfie, about ten seconds. Explicit consent every time, never identified, never stored on our servers.</p></div>
+      <div class="step reveal"><div class="n">1</div><h3>Scan</h3><p>One selfie. Explicit consent every time, never identified, never stored on our servers.</p></div>
       <div class="step reveal"><div class="n">2</div><h3>Read</h3><p>Your Skin Type 16, 12-tone Personal Color, water–oil axes and zone-by-zone signals — on the frameworks Korean skincare actually uses.</p></div>
-      <div class="step reveal"><div class="n">3</div><h3>Choose</h3><p>Real Korean products scored 0–100 against <em>your</em> read. Point the camera at any label and see what fits. Ask Hana anything.</p></div>
+      <div class="step reveal"><div class="n">3</div><h3>Choose</h3><p>Scan the products you own and get an AM/PM routine that fits <em>your</em> read. Point the camera at any label and see what fits. Ask Hana anything.</p></div>
     </div>
   </section>
 
@@ -370,10 +373,10 @@
     <h2>Korean beauty standards, read against <em>your</em> skin.</h2>
     <p class="sub">Then applied to the products on the shelf in front of you.</p>
     <div class="pillars">
-      <div class="pillar reveal"><span class="han">스킨 타입 16 · 진단</span><h3>Your Korean Skin ID</h3><p>One selfie → a 4-letter Skin Type 16 read, independent water and oil axes, and the gwang glow your skin can actually chase.</p></div>
+      <div class="pillar reveal"><span class="han">스킨 타입 16 · 피부 ID</span><h3>Your Korean Skin ID</h3><p>One selfie → a 4-letter Skin Type 16 read, independent water and oil axes, and the gwang glow your skin can actually chase.</p></div>
       <div class="pillar reveal"><span class="han">개인 컬러 · 12 톤</span><h3>Personal Color salon</h3><p>A salon-style 12-tone read — Spring / Summer / Autumn / Winter × Light / Bright / True / Mute / Deep — from the same selfie.</p></div>
       <div class="pillar reveal"><span class="han">성분 스캔 · 라벨</span><h3>Scan any label</h3><p>Point the camera at an ingredient list. Each ingredient is graded against your profile — what matches your barrier today, and what doesn’t.</p></div>
-      <div class="pillar reveal"><span class="han">정직한 점수 · 0–100</span><h3>Honest scores, real brands</h3><p>120+ real Korean products — Beauty of Joseon, Anua, Cosrx, Sulwhasoo — scored 0–100 against your scan. Nobody can pay for a better number.</p></div>
+      <div class="pillar reveal"><span class="han">광고 없음 · 진짜 브랜드</span><h3>Real brands, no paid rankings</h3><p>120+ real Korean products — Beauty of Joseon, Anua, Cosrx, Sulwhasoo — matched against your scan. Nobody can pay for a better spot.</p></div>
       <div class="pillar reveal"><span class="han">하나 · 코치</span><h3>Hana, your K-beauty coach</h3><p>Korean editorial standards and Hanbang tradition in chat: layering questions, first-serum picks, glass-skin plans — and a roast of the routine you paste in.</p></div>
       <div class="pillar reveal"><span class="han">복 · 글로우 무비</span><h3>Bok, and your Glow Movie</h3><p>복 means luck. Your peach sidekick marks each ritual, keeps the streak honest, and turns your skin journey into a 6-second reel worth sending.</p></div>
     </div>
@@ -385,16 +388,16 @@
     <h2>See it, not a mock-up.</h2>
     <p class="sub">Straight from the app on the App Store today.</p>
     <div class="gallery">
-      <figure class="shot reveal"><img src="/assets/shot-product.webp" width="720" height="961" alt="A Korean product scored against your skin profile" loading="lazy"><figcaption><b>Product, scored</b>Against your scan, not a paid ranking.</figcaption></figure>
+      <figure class="shot reveal"><img src="/assets/shot-product.webp" width="720" height="961" alt="A Korean product matched against your skin profile" loading="lazy"><figcaption><b>Product, matched</b>Against your scan, not a paid ranking.</figcaption></figure>
       <figure class="shot reveal"><img src="/assets/shot-skintype.webp" width="720" height="1558" alt="Skin Type 16 result screen" loading="lazy"><figcaption><b>Skin Type 16</b>Your four letters, explained.</figcaption></figure>
       <figure class="shot reveal"><img src="/assets/shot-hana.webp" width="720" height="1558" alt="Hana coach chat screen" loading="lazy"><figcaption><b>Hana</b>Ask about layering, in plain language.</figcaption></figure>
       <figure class="shot reveal"><img src="/assets/shot-glow.webp" width="720" height="1558" alt="Glow Movie progress arc screen" loading="lazy"><figcaption><b>Glow Movie</b>Your journey, as a 6-second reel.</figcaption></figure>
     </div>
 
     <div class="honest reveal">
-      <div><div class="num">0</div><h3>Paid placements</h3><p>No sponsored rankings, no brand can buy a score. Product links may earn us a commission — commissions never touch scores.</p></div>
+      <div><div class="num">0</div><h3>Paid placements</h3><p>No sponsored rankings, no brand can buy a better spot. Product links may earn us a commission — commissions never touch recommendations.</p></div>
       <div><div class="num">1×</div><h3>Your selfie is analyzed once</h3><p>Explicit consent before every scan. Never identified, never stored on our servers, never sold. No “looks score,” ever.</p></div>
-      <div><div class="num">~10s</div><h3>Cosmetic signals, not a diagnosis</h3><p>Jineo reads skin signals and suggests cosmetic routines. It isn’t a medical device and doesn’t diagnose or treat anything.</p></div>
+      <div><div class="num">0</div><h3>Diagnoses — cosmetic signals only</h3><p>Jineo reads skin signals and suggests cosmetic routines. It isn’t a medical device and doesn’t diagnose or treat anything.</p></div>
     </div>
   </section>
 
@@ -405,8 +408,8 @@
     <div class="faq">
       <details><summary>How does the skin scan work?</summary><p>You take one selfie. It’s analyzed once by an AI vision model to read cosmetic skin signals — hydration and oil balance, pore zones, marks and redness by facial zone, and tone for Personal Color. Your selfie is never stored on our servers.</p></details>
       <details><summary>What is Skin Type 16?</summary><p>Our Korean-named skin identity system, built on the dermatologist-developed Baumann framework used in Korean skincare research. Four axes — Dry/Oily · Sensitive/Resistant · Pigment-prone/Non-pigmented · Wrinkle-prone/Tight — give you a 4-letter type and its Korean name.</p></details>
-      <details><summary>Are the scores sponsored or paid by brands?</summary><p>No. Zero paid rankings, zero sponsored scores. No brand can pay for placement or a better number, anywhere in the app. Product links may earn us an affiliate commission at no extra cost to you — commissions never touch scores.</p></details>
-      <details><summary>Is Jineo free?</summary><p>The first scan is free. Jineo Pro — re-scans, the Hana coach, Routine Roast, cycle tuning — is $5.99/week or $59.99/year with a 7-day free trial on annual. Managed through your Apple ID; cancel anytime.</p></details>
+      <details><summary>Are the recommendations sponsored or paid by brands?</summary><p>No. Zero paid rankings, zero sponsored placements. No brand can pay for placement or a better spot, anywhere in the app. Product links may earn us an affiliate commission at no extra cost to you — commissions never touch recommendations.</p></details>
+      <details><summary>How much does Jineo cost?</summary><p>Jineo Pro is $5.99/week or $59.99/year, with a 7-day free trial on the annual plan. Managed through your Apple ID; cancel anytime.</p></details>
       <details><summary>Does Jineo diagnose acne or skin conditions?</summary><p>No. Jineo reads cosmetic signals and suggests cosmetic routines — it doesn’t diagnose, treat, or cure anything. For persistent or concerning skin issues, please see a licensed dermatologist.</p></details>
       <details><summary>Is my selfie stored? Is it private?</summary><p>Your selfie is analyzed once and never stored on our servers or sold. We ask explicit consent before every scan, never identify faces, and never produce a “looks score.” Full details in the <a href="/privacy.html">privacy policy</a>.</p></details>
     </div>
@@ -415,7 +418,7 @@
 
   <section class="final">
     <h2>Stop guessing. <em>Scan.</em></h2>
-    <a class="btn btn-pink" href="https://apps.apple.com/app/apple-store/id6762692530?pt=128096369&ct=website&mt=8" target="_blank" rel="noopener">Download Jineo — free first scan →</a>
+    <a class="btn btn-pink" href="https://apps.apple.com/app/apple-store/id6762692530?pt=128096369&ct=website&mt=8" target="_blank" rel="noopener">Download Jineo on iPhone →</a>
     <p class="price">Pro $5.99/week or $59.99/year · 7-day free trial on annual · cancel anytime</p>
     <div class="seal">진</div>
   </section>
@@ -435,7 +438,7 @@
         <div style="margin-top:16px; font-size:12px; opacity:0.72;">© 2026 Universal AI LLC</div>
 </footer>
 
-<div class="sticky"><a class="btn btn-pink" href="https://apps.apple.com/app/apple-store/id6762692530?pt=128096369&ct=website&mt=8" target="_blank" rel="noopener">Free first scan on iPhone →</a></div>
+<div class="sticky"><a class="btn btn-pink" href="https://apps.apple.com/app/apple-store/id6762692530?pt=128096369&ct=website&mt=8" target="_blank" rel="noopener">Get it on iPhone →</a></div>
 
 <script>
   // reveal-on-scroll; harmless without JS (elements stay visible via reduced-motion or if IO is missing)
